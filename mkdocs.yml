@@ -1,0 +1,41 @@
+site_name: marvel-app
+repo_name: but-sd/marvel-app
+
+nav:
+  - Accueil: index.md
+  - Version 0.1.0: version-0.1.0.md
+
+theme:
+  name: material
+  language: fr
+  features:
+    # Permet d'afficher le menu de navigation sous forme d'onglets
+    - navigation.tabs
+    # Permet de garder le menu de navigation visible en permanence
+    - navigation.tabs.sticky
+    # Permet d'afficher la table des matières
+    - toc.integrate
+    # Permet d'afficher le bouton pour copier le code
+    - content.code.copy
+    # Permet d'afficher un bouton "Retour en haut de la page"
+    - navigation.top
+  plugins:
+    - search:
+        lang: fr
+
+markdown_extensions:
+  # Permet par exemple d'ajouter des attributs aux liens
+  - attr_list
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          # format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
