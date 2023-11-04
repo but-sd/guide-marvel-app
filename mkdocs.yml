@@ -3,7 +3,13 @@ repo_name: but-sd/marvel-app
 
 nav:
   - Accueil: index.md
-  - Version 0.1.0: version-0.1.0.md
+  - Version 0.1.0: version-0.*/version-0.1.0.md
+  - Version 0.2.0: version-0.*/version-0.2.0.md
+  - Version 0.3.0: version-0.*/version-0.3.0.md
+  - Version 0.4.0: version-0.*/version-0.4.0.md
+  - Version 1.0.0: version-1.*/version-1.0.0.md
+  - Version 1.1.0: version-1.*/version-1.1.0.md
+  - Version 1.2.0: version-1.*/version-1.2.0.md
 
 theme:
   name: material
@@ -15,6 +21,7 @@ theme:
     - navigation.tabs.sticky
     # Permet d'afficher la table des matières
     - toc.integrate
+    
     # Permet d'afficher le bouton pour copier le code
     - content.code.copy
     # Permet d'afficher un bouton "Retour en haut de la page"
@@ -39,3 +46,5 @@ markdown_extensions:
           # format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
+
+dev_addr: 127.0.0.1:8001
