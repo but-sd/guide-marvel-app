@@ -95,15 +95,10 @@ npm run start
 
 Etant donné que nous avons une application **react** fonctionnelle, nous allons commiter les modifications, pour pouvoir ensuite la modifier.
 
-Ajouter les modifications au prochain commit avec la commande suivante :
+Commiter les modifications avec la commande suivante :
 
 ```bash
 git add .
-```
-
-Créer un commit avec la commande suivante :
-
-```bash
 git commit -m "Initialize react project"
 ```
 
@@ -234,15 +229,10 @@ Nous utilisons la fonction `map` pour parcourir la liste des charactères et aff
 
 Nous avons transformé la page liste des charactères en composant react. Nous allons encore modifier ce composant, mais avant cela, nous allons commiter les modifications.
 
-Ajouter les modifications au prochain commit avec la commande suivante :
+Commiter les modifications avec la commande suivante :
 
 ```bash
 git add .
-```
-
-Créer un commit avec la commande suivante :
-
-```bash
 git commit -m "Transform characters list page into react component"
 ```
 
@@ -294,15 +284,10 @@ export default App;
 
 Nous avons maintenant un composant `CharactersList` qui permet d'afficher la liste des charactères. Nous pouvons donc commiter les modifications.
 
-Ajouter les modifications au prochain commit avec la commande suivante :
+Commiter les modifications avec la commande suivante :
 
 ```bash
 git add .
-```
-
-Créer un commit avec la commande suivante :
-
-```bash
 git commit -m "Create CharactersList component"
 ```
 
@@ -400,15 +385,10 @@ export function NumberOfCharacters({ characters = [] }) {
 
 Nous avons maintenant deux composants `CharactersList` et `NumberOfCharacters` qui permettent d'afficher la liste des charactères, le nombre de charactères et de gérer le cas où il n'y a aucun charactère. Nous pouvons donc commiter les modifications.
 
-Ajouter les modifications au prochain commit avec la commande suivante :
+Commiter les modifications avec la commande suivante :
 
 ```bash
 git add .
-```
-
-Créer un commit avec la commande suivante :
-
-```bash
 git commit -m "Create NumberOfCharacters component and fix CharactersList component"
 ```
 
@@ -440,19 +420,34 @@ git branch -d feature/react
 
 Cette version de l'application est disponible sur la branche `develop` du dépôt GitHub. 
 
-Bien que l'on ait effectué plusieurs commits, mais un seul push, on constat bien que l'historique de commit est conservé sur GitHub.
+Bien que l'on ait effectué plusieurs commits, mais un seul push, on constate bien que l'historique de commit est conservé sur GitHub.
 
 ![Historique de commit](./images/version-0.3.0-git-history.png)
 
-Etant donné qu'elle n'apporte pas de nouvelle fonctionnalité, elle ne sera pas taguée ni déployée. Il n'est donc pas utile de merger la branche `develop` dans la branche `main`.
+Merge de la branche `develop` dans la branche `main` avec la commande suivante :
 
-## Conclusion
+```bash
+git switch main
+git merge develop
+```
 
-Avec cette version, (que nous ne taguons pas), nous avons :
+Pousser les modifications sur GitHub avec la commande suivante :
 
-- initialiser un projet react
-- créer des composants react
-- utiliser des composants react dans d'autres composants react
+```bash
+git push
+```
+
+Créer le tag `v0.3.0` avec la commande suivante :
+
+```bash
+git tag v0.3.0 -m "version 0.3.0"
+```
+
+Pousser le tag `v0.3.0` sur GitHub avec la commande suivante :
+
+```bash
+git push origin v0.3.0
+```
 
 ## Liens utiles
 

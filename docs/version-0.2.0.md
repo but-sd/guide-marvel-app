@@ -114,20 +114,12 @@ Nous utilisons ici des sélecteurs CSS pour appliquer des styles aux éléments 
 
 Si l'on souhaite cibler plus précisément un élément, nous pouvons utiliser un sélecteur plus spécifique. Par exemple, si l'on souhaite cibler uniquement les éléments `li` qui sont dans la liste des personnages, nous pouvons utiliser le sélecteur `#characters li`. Le `#` permet de cibler un élément par son identifiant. L'identifiant est défini dans le fichier `index.html` avec l'attribut `id`. 
 
-Pour plus de détails sur les sélecteurs CSS, vous pouvez consulter la documentation de [memo-html](https://alex1dregirard.github.io/memo-html/css/#selecteurs){:target="_blank"}.
+Pour plus de détails sur les sélecteurs CSS, vous pouvez consulter la documentation de [guide-html](https://but-sd.github.io/guide-html/css/#selecteurs){:target="_blank"}.
 
-
-### Commit et push des modifications
-
-Ajouter les modifications au prochain commit avec la commande suivante :
+Commiter les modifications :
 
 ```bash
 git add .
-```
-
-Créer un commit avec la commande suivante :
-
-```bash
 git commit -m "Add style"
 ```
 
@@ -147,7 +139,7 @@ git switch feature/data
 
 Dans un premier temps, nous allons simuler un appel d'API pour récupérer des données. Nous verrons plus tard comment appeler une API. Pour cela nous allons charger les données depuis un fichier JSON (**J**ava**S**cript **O**bject **N**otation).
 
-Créer un dossier `src/data` à la racine du projet. Dans ce dossier ajouter le fichier `characters.json` avec le contenu suivant :
+Créer le fichier `src/data/characters.json` avec le contenu suivant :
 
 ```javascript
 
@@ -194,7 +186,7 @@ Le fichier `characters.json` contient un tableau d'objets. Chaque objet représe
 
 Pour récupérer les données depuis le fichier JSON, nous allons utiliser la fonction `fetch` de JavaScript. Cette fonction permet de faire des requêtes HTTP.
 
-Ajouter le code suivant dans le fichier `script.js` :
+Créer le fichier `src/script.js` avec le contenu suivant :
 
 ```javascript
 console.log("Welcome to marvel app");
@@ -228,7 +220,7 @@ Pour récupérer les personnages, nous devons appeler la fonction `getCharacters
 
 Ouvrir la console du navigateur web. Vous devriez voir le tableau des personnages.
 
-Pour plus de détails sur les promesses, vous pouvez consulter la documentation de [memo-html](https://alex1dregirard.github.io/memo-html/js/#async-await){:target="_blank"}.
+Pour plus de détails sur les promesses, vous pouvez consulter la documentation de [guide-html](https://but-sd.github.io/guide-html/js/#async-await){:target="_blank"}.
 
 #### Ajout des personnages à la liste
 
@@ -254,16 +246,11 @@ Modifier le fichier `index.html` pour supprimer les éléments de la liste qui s
 </html>
 ```
 
-Ajouter les modifications au prochain commit avec la commande suivante :
+Commiter les modifications :
 
 ```bash
 git add .
-```
-
-Créer un commit avec la commande suivante :
-
-```bash
-git commit -m "Add data from json file"
+git commit -m "Add data"
 ```
 
 ### Affichage des personnages
@@ -296,47 +283,20 @@ const characters = getCharacters().then(characters => {
 });
 ```
 
-Après avoir charger les personnages, on récupère l'élément `ul` avec l'identifiant `characters`. On parcourt ensuite la liste des personnages, et pour chaque personnage on crée un élément `li` que l'on ajoute à l'élément `ul` Pour plus de détail sur la manipulation du DOM en Javascript, vous pouvez consulter la documentation de [memo-html](https://alex1dregirard.github.io/memo-html/js/#selectionner-un-element){:target="_blank" }.
+Après avoir charger les personnages, on récupère l'élément `ul` avec l'identifiant `characters`. On parcourt ensuite la liste des personnages, et pour chaque personnage on crée un élément `li` que l'on ajoute à l'élément `ul` Pour plus de détail sur la manipulation du DOM en Javascript, vous pouvez consulter la documentation de [guide-html](https://but-sd.github.io/guide-html/js/#selectionner-un-element){:target="_blank" }.
 
-Ajouter les modifications au prochain commit avec la commande suivante :
+Commiter les modifications :
 
 ```bash
 git add .
+git commit -m "Add characters"
 ```
 
-Créer un commit avec la commande suivante :
+Nous avons terminé de travailler sur les deux fonctionnalités. Nous allons fusionner les deux branches vers la branche `develop`.
 
-```bash
-git commit -m "Add characters to the list"
-```
+## Merge vers develop
 
-Nous avons terminé de travailler sur les deux fonctionnalités. Nous allons maintenant les pousser sur GitHub.
-
-## Push des modifications
-
-Nous allons pousser les différentes branches sur GitHub.
-
-Pour la branche `feature/style` :
-
-```bash
-git push origin feature/style
-```
-
-Pour la branche `feature/data` :
-
-```bash
-git push origin feature/data
-```
-
-Pour la branche `develop` :
-
-```bash
-git push origin develop
-```
-
-## Merge des branches `feature/style` et `feature/data` vers la branche `develop`
-
-### Merge de la branch `feature/style` vers la branche `develop`
+### Merge de `feature/style`
 
 Nous allons fusionner la branche `feature/style` vers la branche `develop`. La fusion permet de combiner les modifications de deux branches. 
 
@@ -363,6 +323,8 @@ git switch develop
 
 git merge feature/data -m "merge feature/data"
 ```
+
+Il ne devrait pas y avoir de conflit. Si vous avez un conflit, il faut le résoudre avant de continuer.
 
 La branche `develop` contient maintenant les modifications des deux branches `feature/style` et `feature/data`. Nous pouvons maintenant pousser la branche `develop` sur GitHub.
 
@@ -400,6 +362,15 @@ Envoyer le tag `v0.2.0` sur GitHub avec la commande suivante :
 
 ```bash
 git push origin v0.2.0
+```
+
+### Suppression des branches `feature/style` et `feature/data`
+
+Les branches `feature/style` et `feature/data` ne sont plus utiles. Nous pouvons les supprimer avec la commande suivante :
+
+```bash
+git branch -d feature/style
+git branch -d feature/data
 ```
 
 ## Conclusion

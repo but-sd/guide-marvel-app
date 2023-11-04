@@ -76,6 +76,14 @@ npm init -y
 
 Cela va créer un nouveau fichier `package.json` à la racine du projet. Ce fichier contient les informations du projet, ainsi que la liste des dépendances du projet.
 
+Modifier le fichier généré pour mettre la version du projet à `0.1.0` :
+
+```json
+{
+    "version": "0.1.0"
+}
+```
+
 ### Installation des dépendances
 
 Installer la dépendance suivante :
@@ -84,7 +92,15 @@ Installer la dépendance suivante :
 npm install --save-dev browser-sync
 ```
 
+Cela va installer la dépendance `browser-sync` dans le dossier `node_modules` du projet. La dépendance sera ajoutée dans la liste des dépendances du projet dans le fichier `package.json`. L'option `--save-dev` permet d'ajouter la dépendance dans la liste des dépendances de développement. Cela permet de distinguer les dépendances de développement des dépendances de production.
+
 `browser-sync` est une dépendance qui permet de créer un serveur web local, avec un rechargement automatique du navigateur à chaque modification du code source. Cela nous permettra de tester simplement la première version de notre application en local.
+
+Les fichiers présents dans le dossier `node_modules` ne doivent pas être versionnés. Nous allons donc les ignorer en créant un fichier `.gitignore` à la racine du projet avec le contenu suivant :
+
+```
+node_modules
+```
 
 ### Configuration de browser-sync
 
@@ -125,7 +141,7 @@ npm start
 
 Créer un dossier `src` à la racine du projet. Ce dossier contiendra le code source de notre application.
 
-Ajouter un fichier `index.html` dans le dossier `src` avec le contenu suivant :
+Ajouter un fichier `src/index.html` avec le contenu suivant :
 
 ````html
 <!DOCTYPE html>
@@ -147,6 +163,15 @@ npm start
 
 Ouvrir l'adresse http://localhost:3000 dans un navigateur web. Vous devriez voir le contenu du fichier `index.html`.
 
+
+
+Commiter les modifications :
+
+```bash
+git add .
+git commit -m "Hello, World!"
+```
+
 ## Ajout de contenu statique
 
 ### Ajout de contenu HTML
@@ -155,7 +180,7 @@ Modifier le fichier `index.html` pour mettre le contenu suivant :
 
 ```html
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <title>Marvel App</title>
@@ -183,9 +208,16 @@ Modifier le fichier `index.html` pour mettre le contenu suivant :
 </html>
 ```
 
+Commiter les modifications :
+
+```bash
+git add .
+git commit -m "Add static content"
+```
+
 ### Ajout de contenu CSS
 
-Créer un fichier `style.css` dans le dossier `src` avec le contenu suivant :
+Créer un fichier `src/style.css` avec le contenu suivant :
 
 ```css
 body {
@@ -200,7 +232,7 @@ Modifier le fichier `index.html` pour ajouter le lien vers le fichier `style.css
 
 ```html
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <title>Marvel App</title>
@@ -208,6 +240,23 @@ Modifier le fichier `index.html` pour ajouter le lien vers le fichier `style.css
     </head>
     <body>
         <h1>Marvel App</h1>
+        <ul id="characters">
+            <li>
+                Beast
+            </li>
+            <li>
+                Captain America
+            </li>
+            <li>
+                Deadpool
+            </li>
+            <li>
+                Groot
+            </li>
+            <li>
+                Hulk
+            </li>
+        </ul>
     </body>
 </html>
 ```
@@ -216,30 +265,11 @@ L'attribut `rel` permet d'indiquer le type de lien. Ici, nous indiquons que le l
 
 L'apparence de la page web devrait changer. Nous avons appliqué un style par défaut au corps de la page web, pour supprimer les marges et les espacements par défaut.
 
-## Commit et push des modifications
-
-Afin de sauvegarder nos modifications, nous allons pousser les modifications sur GitHub. Nous verrons plus tard comment fonctionne Git.
-
-### Commit des modifications
-
-Créer un fichier `.gitignore` à la racine du projet avec le contenu suivant :
-
-```
-node_modules
-```
-
-Ce fichier permet d'ignorer le dossier `node_modules`, qui contient les dépendances du projet. Nous n'avons pas besoin de sauvegarder les dépendances du projet, car elles peuvent être installées à partir du fichier `package.json`.
-
-Ajouter les modifications au prochain commit avec la commande suivante :
+Commiter les modifications :
 
 ```bash
 git add .
-```
-
-Créer un commit avec la commande suivante :
-
-```bash
-git commit -m "Add static and dynamic content"
+git commit -m "Add style"
 ```
 
 ### Push des modifications
