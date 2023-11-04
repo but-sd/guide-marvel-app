@@ -196,7 +196,7 @@ La pull request `feature/add-version-number` est bloquée (en orange), car nous 
 
 La pull request `feature/add-unit-tests` est bloqué (en rouge), car le test unitaire de `App.js` est en erreur.
 
-![Pull requests](../images/pull-requests.png)
+![Pull requests](./images/pull-requests.png)
 
 Nous allons fixer le test unitaire de `App.js` pour que la pull request `feature/add-unit-tests` soit valide et que nous puissions la merger dans la branche `develop`.
 
@@ -232,7 +232,7 @@ La pull request `feature/add-unit-tests` est à nouveau valide, on peut donc mer
 
 On constate que la pull request `feature/add-version-number` est toujours bloquée, car elle ne contient toujours pas le fichier `.github/workflows/unit-tests.yml`, mais nous avons aussi un nouveau message car la branche `feature/add-unit-tests` n'est pas à jour avec la branche `develop`. 
 
-![Pull requests](../images/pull-requests-add-version-number.png)
+![Pull requests](./images/pull-requests-add-version-number.png)
 
 Nous allons donc mettre à jour la branche `feature/add-version-number` avec la branche `develop`, en cliquant sur le bouton `Update branch`. Il ne devrait pas y avoir de conflit, car nous n'avons pas modifié le même fichier dans les 2 branches. La pull request `feature/add-version-number` est à nouveau valide, on peut donc merger la pull request.
 
@@ -464,7 +464,7 @@ npm run test:coverage
 
 Le rapport de couverture de code est le suivant :
 
-![Coverage report](../images/coverage-report.png)
+![Coverage report](./images/coverage-report.png)
 
 En vert, on voit le code qui est couvert à 100% par les tests unitaires. En rouge, on voit le code qui n'est pas couvert par les tests unitaires. En jaune, on voit le code qui est partiellement couvert par les tests unitaires.
 

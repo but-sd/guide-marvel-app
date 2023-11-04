@@ -2,7 +2,7 @@
 
 ## Objectifs
 
-Support de présentation : [marvel-app-0.3.0.pdf](../slides/marvel-app-0.3.0.pdf){target=_blank}
+Support de présentation : [marvel-app-0.3.0.pdf](./slides/marvel-app-0.3.0.pdf){target=_blank}
 
 La version **0.3.0** va apporter les modifications suivantes :
 
@@ -442,7 +442,7 @@ Cette version de l'application est disponible sur la branche `develop` du dépô
 
 Bien que l'on ait effectué plusieurs commits, mais un seul push, on constat bien que l'historique de commit est conservé sur GitHub.
 
-![Historique de commit](../images/version-0.3.0-git-history.png)
+![Historique de commit](./images/version-0.3.0-git-history.png)
 
 Etant donné qu'elle n'apporte pas de nouvelle fonctionnalité, elle ne sera pas taguée ni déployée. Il n'est donc pas utile de merger la branche `develop` dans la branche `main`.
 

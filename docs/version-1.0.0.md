@@ -529,13 +529,13 @@ Et pour l'ajout des `status checks`, [voir](https://but-sd.github.io/guide-githu
 
 Maintenant que nous avons terminé la feature `character-detail` et protégé les branches `main` et `develop`, nous allons proposer la validation de la feature au travers d'une pull request. Nous allons utiliser la fonctionnalité `compare` de GitHub pour comparer la branche `feature/character-detail` avec la branche `develop` et utiliser la fonctionnalité `create pull request` de GitHub pour créer la pull request.
 
-![Compare](../images/compare.png)
+![Compare](./images/compare.png)
 
 Grâce à la fonctionnalité `compare` de GitHub, nous pouvons voir les différences entre les deux branches. Nous pouvons voir qu'il y a eu 2 commits sur la branche `feature/character-detail` et que 9 fichiers ont été modifiés. Nous pouvons voir les différences entre les deux branches pour chaque fichier.
 
 Nous pouvons créer la pull request en cliquant sur le bouton `create pull request`.
 
-![Create pull request](../images/create-pull-request.png)
+![Create pull request](./images/create-pull-request.png)
 
 Lors de la création de la pull request, nous allons utiliser la fonctionnalité `reviewers` de GitHub pour demander à un autre développeur de relire notre code. Nous allons utiliser la fonctionnalité `assignees` de GitHub pour s'assigner la pull request. Nous allons utiliser la fonctionnalité `labels` de GitHub pour ajouter le label `enhancement` à la pull request.
 
@@ -543,21 +543,21 @@ Remarque : Pour pouvoir avoir accès à la fonctionnalité `reviewers`, il faut 
 
 Les pull requests sont visibles dans l'onglet `Pull requests` du repository. Nous pouvons voir la pull request que nous venons de créer.
 
-![Pull request](../images/pull-requests.png)
+![Pull request](./images/pull-requests.png)
 
 Nous pouvons voir que la pull request a échoué. En cliquant sur la pull request, nous pouvons voir que le code de la pull request ne passe pas les `status checks`.
 
-![Pull request failed](../images/pull-request-failed.png)
+![Pull request failed](./images/pull-request-failed.png)
 
 Il faut donc corriger le code avant de pouvoir valider la pull request.
 
 ### Validation de la pull request
 
-![Pull request ok](../images/pull-request-ok.png)
+![Pull request ok](./images/pull-request-ok.png)
 
 Une fois tout les status checks passés, nous pouvons valider la pull request, en utilisant la fonctionnalité `merge pull request`. Nous pouvons voir que la pull request est validée et que le code est mergé sur la branche `develop`.
 
-![Pull request merged](../images/pull-request-merged.png)
+![Pull request merged](./images/pull-request-merged.png)
 
 ## Release
 
@@ -686,7 +686,7 @@ Nous allons utiliser la fonctionnalité `create release` de GitHub pour créer l
 
 Elle permet d'ajouter des notes de version, des captures d'écran, etc... Elle permet aussi de télécharger le code source de la release.
 
-![Create release](../images/create-release.png)
+![Create release](./images/create-release.png)
 
 ### Mise à jour de la branche `develop`
 

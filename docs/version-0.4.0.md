@@ -2,7 +2,7 @@
 
 ## Objectifs
 
-Support de présentation :  [marvel-app-0.4.0.pdf](../slides/marvel-app-0.4.0.pdf){target=_blank}
+Support de présentation :  [marvel-app-0.4.0.pdf](./slides/marvel-app-0.4.0.pdf){target=_blank}
 
 La version 0.4.0 va apporter les modifications suivantes :
 
