@@ -48,7 +48,7 @@ Pour installer Git, rendez-vous sur le site officiel : [https://git-scm.com/](ht
 
 Nous verrons plus tard comment utiliser Git pour gérer l'historique des modifications de notre projet.
 
-Il est toutefois nécessaire d'appliquer quelques configurations avant de pouvoir utiliser Git, voir [Configurer Git](https://but-sd.github.io/memo-git/configurer-git/){:target="_blank"}.
+Il est toutefois nécessaire d'appliquer quelques configurations avant de pouvoir utiliser Git, voir [Configurer Git](https://but-sd.github.io/guide-git/configurer-git/){:target="_blank"}.
 
 ## Initialisation du projet
 
