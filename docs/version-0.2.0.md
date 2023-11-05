@@ -31,7 +31,7 @@ gitGraph
 
 ## Préparation des branches de travail
 
-Bien que les modifications soient mineures, nous allons voir comment utiliser git pour travailler sur le projet et nous faciliter la vie. Nous allons pouvoir travailler sur les deux fonctionnalités en même temps, et les sauvegarder indépendamment. Nous allons utiliser les branches de git pour cela, en respectant un workflow de développement, appelé [Gitflow](https://but-sd.github.io/memo-git/branches/#git-flow){:target="_blank"}.
+Bien que les modifications soient mineures, nous allons voir comment utiliser git pour travailler sur le projet et nous faciliter la vie. Nous allons pouvoir travailler sur les deux fonctionnalités en même temps, et les sauvegarder indépendamment. Nous allons utiliser les branches de git pour cela, en respectant un workflow de développement, appelé [Gitflow](https://but-sd.github.io/guide-git/git-flow){:target="_blank"}.
 
 ### Création de la branche `develop`
 
@@ -71,6 +71,14 @@ git switch -c feature/data develop
 ```
 
 Le dernier argument de la commande `git switch` est la branche à partir de laquelle nous allons créer la nouvelle branche.
+
+Pour lister les branches, vous pouvez utiliser la commande suivante :
+
+```bash
+git branch
+```
+
+La branche active est la branche qui est précédée d'un `*`.
 
 ## Ajout de style
 
@@ -216,8 +224,6 @@ Pour récupérer la valeur d'une promesse, nous pouvons utiliser la méthode `th
 Pour récupérer les personnages, nous devons appeler la fonction `getCharacters`, puis utiliser la méthode `then` pour récupérer les personnages. Nous allons dans un premier temps afficher les personnages dans la console.
 
 Ouvrir la console du navigateur web. Vous devriez voir le tableau des personnages.
-
-Pour plus de détails sur les promesses, vous pouvez consulter la documentation de [guide-html](https://but-sd.github.io/guide-html/js/#async-await){:target="_blank"}.
 
 ### Affichage des données
 
