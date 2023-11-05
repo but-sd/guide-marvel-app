@@ -1,5 +1,5 @@
-site_name: marvel-app
-repo_name: but-sd/marvel-app
+site_name: guide-marvel-app
+repo_name: but-sd/guide-marvel-app
 
 nav:
   - Accueil: index.md
