@@ -41,12 +41,11 @@ Une page n'est rien d'autre qu'un composant React. Nous allons donc créer un co
 Créer un fichier `src/pages/AboutPage.js` avec le contenu suivant :
 
 ```javascript
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const AboutPage = () => {
-    useEffect(() => {
-        document.title = "About | Marvel App";
-    });
+    // change the title of the page
+    document.title = "About | Marvel App";
 
     return (
         <>
@@ -59,19 +58,18 @@ const AboutPage = () => {
 export default AboutPage;
 ```
 
-La page `AboutPage` est une page statique. Elle affiche simplement un titre et un paragraphe. Le titre de la page est défini dans le hook `useEffect` qui est appelé à chaque fois que le composant est monté. Le titre de la page est donc modifié à chaque fois que la page est affichée.
+La page `AboutPage` est une page statique. Elle affiche simplement un titre et un paragraphe et modifie le titre de la page.
 
 ### ContactPage
 
 Créer un fichier `src/pages/ContactPage.js` avec le contenu suivant :
 
 ```javascript
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const ContactPage = () => {
-    useEffect(() => {
-        document.title = "Contact | Marvel App";
-    }, []);
+    // change the title of the page
+    document.title = "Contact | Marvel App";
 
     return (
         <>
@@ -86,23 +84,23 @@ const ContactPage = () => {
 export default ContactPage;
 ```
 
-Comme pour la page `AboutPage`, la page `ContactPage` est une page statique. Elle affiche simplement un titre et un paragraphe. Le titre de la page est défini dans le hook `useEffect` qui est appelé à chaque fois que le composant est monté. Le titre de la page est donc modifié à chaque fois que la page est affichée.
+Comme pour la page `AboutPage`, la page `ContactPage` est une page statique. Elle affiche simplement un titre et un paragraphe et modifie le titre de la page.
 
 ### CharactersPage
 
 Créer un fichier `src/pages/CharactersPage.js` avec le contenu suivant :
 
 ```javascript
-import React, { useEffect } from 'react';
+import React from 'react';
 import { CharactersList } from "../components/CharactersList";
 import { NumberOfCharacters } from "../components/NumberOfCharacters";
 
 const characters = require('../data/characters.json');
 
 const CharactersPage = () => {
-    useEffect(() => {
-        document.title = "Marvel App";
-    }, []);
+    // change the title of the page
+    document.title = "Marvel App";
+
     return (
         <>
             <h1>Marvel Characters</h1>
@@ -362,16 +360,15 @@ De plus ayant maintenant un header de navigation, l'élément `h1` de chaque pag
 
 === "pages/CharactersPage.js"
     ```javascript
-    import React, { useEffect } from 'react';
+    import React from 'react';
     import { CharactersList } from "../components/CharactersList";
     import { NumberOfCharacters } from "../components/NumberOfCharacters";
 
     const characters = require('../data/characters.json');
 
     const CharactersPage = () => {
-        useEffect(() => {
-            document.title = "Marvel App";
-        }, []);
+        // change the title of the page
+        document.title = "Marvel App";
 
         return (
             <>
@@ -387,12 +384,11 @@ De plus ayant maintenant un header de navigation, l'élément `h1` de chaque pag
     ```
 === "pages/AboutPage.js"
     ```javascript
-    import React, { useEffect } from 'react';
+    import React from 'react';
 
     const AboutPage = () => {
-        useEffect(() => {
-            document.title = "About | Marvel App";
-        });
+        // change the title of the page
+        document.title = "About | Marvel App";
 
         return (
             <>
@@ -406,12 +402,11 @@ De plus ayant maintenant un header de navigation, l'élément `h1` de chaque pag
     ```
 === "pages/ContactPage.js"
     ```javascript
-    import React, { useEffect } from 'react';
+    import React from 'react';
 
     const ContactPage = () => {
-        useEffect(() => {
-            document.title = "Contact | Marvel App";
-        }, []);
+        // change the title of the page
+        document.title = "Contact | Marvel App";
 
         return (
             <>

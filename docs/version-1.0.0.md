@@ -169,7 +169,9 @@ import { NumberOfCharacters } from "../components/NumberOfCharacters";
 import { useLoaderData } from 'react-router';
 
 const CharactersPage = () => {
-    
+    // change the title of the page
+    document.title = "Marvel App";
+
     // retrieve the characters using the useLoaderData hook
     const characters = useLoaderData();
 
@@ -193,14 +195,16 @@ Nous avons modifier le composant `CharactersPage` pour utiliser le hook `useLoad
 Modifier le fichier `src/components/CharactersList.js` avec le contenu suivant :
 
 ```javascript
+import { Link } from "react-router-dom";
+
 export function CharactersList({ characters = [] }) {
     return (
         <ul id="characters">
             {characters.map((character) => (
                 <li key={character.id}>
-                    <a href={`/characters/${character.id}`}>
+                    <Link to={`/characters/${character.id}`}>
                         {character.name}
-                    </a>
+                    </Link>
                 </li>
             ))}
         </ul>
@@ -487,9 +491,7 @@ Ce workflow permet de vérifier que le code build. Il est déclenché à chaque 
 
 Pour un projet créé avec `react-create-app`, le build génère le livrable mais permet aussi de vérifier que le code est valide et qu'il n'y a pas d'erreur de syntaxe. En cas d'erreur, le build échoue. Les warnings affichés dans la console lorsque l'on lance `npm run start` qui ne sont pas bloquant durant le développement deviennent bloquant lors du build en production. Cela permet de s'assurer que le code est valide.
 
-Une fois le workflow créé, nous pouvons le tester en modifiant le code source et en poussant les modifications sur GitHub. Le résultat du workflow est visible sur la page des actions du projet sur GitHub.
-
-Si le workflow échoue, il est possible de voir les logs d'exécution du workflow en cliquant sur le nom du workflow dans la page des actions du projet sur GitHub. Cela permet de voir les erreurs et de les corriger ensuite en local avant de pousser les modifications sur GitHub.
+Une fois le workflow créé, nous pouvons le tester en modifiant le code source et en poussant les modifications sur GitHub. 
 
 Commiter et pusher les modifications :
 
@@ -499,6 +501,10 @@ git commit -m "Add build workflow"
 git push
 ```
 
+Le résultat du workflow est visible sur la page des actions du projet sur GitHub.
+
+Si le workflow échoue, il est possible de voir les logs d'exécution du workflow en cliquant sur le nom du workflow dans la page des actions du projet sur GitHub. Cela permet de voir les erreurs et de les corriger ensuite en local avant de pousser les modifications sur GitHub.
+
 ### Protection des branches `main` et `develop`
 
 Nous allons protéger les branches `main` et `develop` :
@@ -507,8 +513,7 @@ Nous allons protéger les branches `main` et `develop` :
 - afin de mettre en oeuvre la revue de code
 - afin de vérifier que le code poussé sur ces branches build correctement
 
-Pour les explications sur la protection des branches, [voir](https://but-sd.github.io/guide-github/pull-request/#protection-des-branches){target=_blank}.
-Et pour l'ajout des `status checks`, [voir](https://but-sd.github.io/guide-github/pull-request/#require-status-checks-to-pass-before-merging){target=_blank}.
+Pour les explications sur la protection des branches, [voir](https://but-sd.github.io/guide-github/settings/#protection-des-branches){target=_blank}.
 
 ## Pull request
 
@@ -548,7 +553,7 @@ Une fois l'ensemble des status checks passés, nous pouvons valider la pull requ
 
 ### Préparation
 
-Le workflow de développement gitflow prévoit la création d'une branche `release` à partir de la branche `develop` pour préparer la mise en production d'une nouvelle version de l'application. Cette branche va permettre de tester l'application avant de la mettre en production, voir [guide-git](https://but-sd.github.io/guide-git/branches/#git-flow){target=_blank} pour plus d'explications.
+Le workflow de développement gitflow prévoit la création d'une branche `release` à partir de la branche `develop` pour préparer la mise en production d'une nouvelle version de l'application. Cette branche va permettre de tester l'application avant de la mettre en production, voir [guide-git](https://but-sd.github.io/guide-git/git-flow/#release){target=_blank} pour plus d'explications.
 
 Nous allons créer une branche `release/1.0.0` à partir de la branche `develop` avec la commande suivante :
 
@@ -677,8 +682,10 @@ Pour cela nous allons créer et valider une pull request de `main` vers `develop
 
 ### Création de la release
 
-Nous allons utiliser la fonctionnalité `create release` de GitHub pour créer la release. La release ce base sur un tag git et ajoute des fonctionnalités supplémentaires. La release est visible dans l'onglet `Releases` du repository.
+Nous allons utiliser la fonctionnalité `create release` de GitHub pour créer la release. La release se base sur un tag git et ajoute des fonctionnalités supplémentaires. La release est visible dans l'onglet `Releases` du repository.
 
 Elle permet d'ajouter des notes de version, des captures d'écran, etc... Elle permet aussi de télécharger le code source de la release.
 
 ![Create release](./images/create-release.png)
+
+Une fois la release créée, elle est visible dans le menu de droite de la page du repository.
