@@ -461,14 +461,9 @@ git merge develop
 git push
 ```
 
-### Tag de la version 0.4.0
+## Tag de la version 0.4.0
 
 ```bash
 git tag v0.4.0 -m "version 0.4.0"
 git push origin v0.4.0
 ```
-## Liens utiles
-
-- [react-router](https://reactrouter.com){target=_blank}
-
-- React router - Les bases : [voir](https://but-sd.github.io/guide-react/react-router/){target=_blank}
