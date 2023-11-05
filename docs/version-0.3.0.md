@@ -414,7 +414,7 @@ git merge develop
 git push
 ```
 
-**Création du tag v0.3.0**
+## Tag de la version 0.3.0
 
 Créer le tag `v0.3.0` et le pousser sur GitHub avec les commandes suivantes :
 
