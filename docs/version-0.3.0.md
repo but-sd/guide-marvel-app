@@ -2,11 +2,13 @@
 
 ## Objectifs
 
-Support de présentation : [marvel-app-0.3.0.pdf](./slides/marvel-app-0.3.0.pdf){target=_blank}
+- Initialisation du projet react
+- Transformation de la page liste des charactères en composant react
+- Création de composants react :
+  - Création du composant `CharactersList`
+  - Création du composant `NumberOfCharacters`
 
-La version **0.3.0** va apporter les modifications suivantes :
-
-- Utilisation de la librairie **react** pour créer l'application web
+Flow git de la version 0.3.0 :
 
 ```mermaid
 gitGraph
@@ -27,10 +29,6 @@ gitGraph
     commit tag: "v0.3.0"
 ```
 
-## Initialisation du projet react
-
-### Création d'une nouvelle branche
-
 Basculer sur la branche `develop` et créer la nouvelle branche `feature/react` avec la commande suivante :
 
 ```bash
@@ -38,7 +36,7 @@ git switch develop
 git switch -c feature/react
 ```
 
-### Initialisation du projet react
+## Initialisation du projet react
 
 Il est possible d'initialiser un projet **react** grâce à l'outil [create-react-ap](https://create-react-app.dev/){target=_blanck} . Nous pourions initialiser le projet **react** avec la commande suivante :
 
@@ -61,9 +59,7 @@ cd react-tmp
 npm start
 ```
 
-### Copie des fichiers dans notre projet
-
-Structure d'un projet react
+**Structure d'un projet react**
 
 Un projet **react** créé avec **create-react-app** contient un ensemble de fichiers et de dossiers qui permettent de développer une application **react**. 
 
@@ -90,8 +86,6 @@ Et vérifier que l'application **react** fonctionne correctement avec la command
 ```bash
 npm run start
 ```
-
-### Commit et push des modifications
 
 Etant donné que nous avons une application **react** fonctionnelle, nous allons commiter les modifications, pour pouvoir ensuite la modifier.
 
@@ -225,11 +219,7 @@ Afin de faciliter la compréhension du code, nous avons récupéré la liste des
 
 Nous utilisons la fonction `map` pour parcourir la liste des charactères et afficher un élément `li` pour chaque charactère. Nous utilisons l'attribut `key` pour indiquer à react que chaque élément est unique.
 
-### Commit des modifications
-
-Nous avons transformé la page liste des charactères en composant react. Nous allons encore modifier ce composant, mais avant cela, nous allons commiter les modifications.
-
-Commiter les modifications avec la commande suivante :
+Nous avons transformé la page liste des charactères en composant react. Nous allons encore modifier ce composant, mais avant cela, nous allons commiter les modifications avec la commande suivante :
 
 ```bash
 git add .
@@ -256,8 +246,6 @@ export function CharactersList({ characters }) {
 }
 ```
 
-### Utilisation du composant `CharactersList`
-
 Modifier le fichier `App.js` pour utiliser le composant `CharactersList` :
 
 ```javascript
@@ -280,20 +268,16 @@ function App() {
 export default App;
 ```
 
-### Commit des modifications
+Nous utilisons le composant `CharactersList` en lui passant la liste des charactères en paramètre. 
 
-Nous avons maintenant un composant `CharactersList` qui permet d'afficher la liste des charactères. Nous pouvons donc commiter les modifications.
-
-Commiter les modifications avec la commande suivante :
+Nous avons maintenant un composant `CharactersList` qui permet d'afficher la liste des charactères. Nous pouvons donc commiter avec la commande suivante :
 
 ```bash
 git add .
 git commit -m "Create CharactersList component"
 ```
 
-## Création du composant NumberOfCharacters
-
-### Création du composant `NumberOfCharacters`
+### Création du composant NumberOfCharacters
 
 Nous allons créer un composant `NumberOfCharacters` qui permet d'afficher le nombre de charactères et de gérer le cas où il n'y a aucun charactère.
 
@@ -308,8 +292,6 @@ export function NumberOfCharacters({ characters }) {
     return <p>There is {characters.length} characters</p>;
 }
 ```
-
-### Utilisation du composant `NumberOfCharacters`
 
 Modifier le fichier `App.js` pour utiliser le composant `NumberOfCharacters` :
 
@@ -335,15 +317,17 @@ function App() {
 export default App;
 ```
 
+## Validation des composants
+
 Afin de tester le cas où il n'y a aucun charactère, il y a trois possibilités :
 
 - supprimer tous les charactères du fichier `characters.json`
 - modifier le fichier `App.js` pour utiliser une liste vide
-- ne pas passer de liste de charactères au composant `NumberOfCharacters`
+- ne pas passer de liste de charactères aux composants `CharactersList` et `NumberOfCharacters`
 
-Les deux premières solutions sont équivalentes, car dans les deux cas, le composant `NumberOfCharacters` reçoit une liste vide. Par contre la troisième solution permet de tester le cas où le composant `NumberOfCharacters` est utilisé sans liste de charactères. Et nous allons constater que le composant `NumberOfCharacters` ne gère pas ce cas, ni le composant `CharactersList` d'ailleurs.
+Les deux premières solutions sont équivalentes, car dans les deux cas, le composant reçoit une liste vide. Par contre la troisième solution permet de tester le cas où le composant est utilisé sans liste de charactères. Et nous allons constater que les composants ne gère pas ce cas.
 
-Nous verrons plus tard comment tester les composants react, et ainsi valider que l'on gère bien tous les cas.
+Nous verrons plus tard comment tester, via du code, les composants react, et ainsi valider que l'on gère bien tous les cas.
 
 Si l'on ne passe pas de liste de charactères aux composants `NumberOfCharacters` et `CharactersList`, nous obtenons des erreurs dans la console du navigateur, qui sont aussi visibles dans la page web, car react en mode développement affiche les erreurs dans la page web.
 
@@ -381,34 +365,29 @@ export function NumberOfCharacters({ characters = [] }) {
 }  
 ```
 
-### Commit des modifications
-
-Nous avons maintenant deux composants `CharactersList` et `NumberOfCharacters` qui permettent d'afficher la liste des charactères, le nombre de charactères et de gérer le cas où il n'y a aucun charactère. Nous pouvons donc commiter les modifications.
-
-Commiter les modifications avec la commande suivante :
+Nous avons maintenant deux composants `CharactersList` et `NumberOfCharacters` qui permettent d'afficher la liste des charactères, le nombre de charactères et de gérer le cas où il n'y a aucun charactère. Nous pouvons donc commiter les modifications avec la commande suivante :
 
 ```bash
 git add .
 git commit -m "Create NumberOfCharacters component and fix CharactersList component"
 ```
 
-Nous avons maintenant une application **react** fonctionnelle. Nous pouvons merge la branche `feature/react` dans la branche `develop`, et pousser les modifications sur GitHub.
+## Mise à jour des branches
 
-Basculer sur la branche `develop` avec la commande suivante :
+Nous avons maintenant une application **react** fonctionnelle. Nous pouvons merger la branche `feature/react` dans la branche `develop`, et pousser les modifications sur GitHub.
+
+**Merge de la branche feature/react dans la branche develop**
+
+Basculer sur la branche `develop` et récupérer les éventuelles modifications avec la commande suivante :
 
 ```bash
 git switch develop
+git pull
 ```
 
-Merge la branche `feature/react` dans la branche `develop` avec la commande suivante :
-
+Merger la branche `feature/react` dans la branche `develop` et pousser les modifications sur GitHub avec la commande suivante :
 ```bash
 git merge feature/react
-```
-
-Pousser les modifications sur GitHub avec la commande suivante :
-
-```bash
 git push
 ```
 
@@ -424,33 +403,22 @@ Bien que l'on ait effectué plusieurs commits, mais un seul push, on constate bi
 
 ![Historique de commit](./images/version-0.3.0-git-history.png)
 
-Merge de la branche `develop` dans la branche `main` avec la commande suivante :
+**Merge de la branche develop dans la branche main**
+
+Merger la branche `develop` dans la branche `main` et pousser les modifications sur GitHub avec la commande suivante :
 
 ```bash
 git switch main
+git pull
 git merge develop
-```
-
-Pousser les modifications sur GitHub avec la commande suivante :
-
-```bash
 git push
 ```
 
-Créer le tag `v0.3.0` avec la commande suivante :
+**Création du tag v0.3.0**
+
+Créer le tag `v0.3.0` et le pousser sur GitHub avec les commandes suivantes :
 
 ```bash
 git tag v0.3.0 -m "version 0.3.0"
-```
-
-Pousser le tag `v0.3.0` sur GitHub avec la commande suivante :
-
-```bash
 git push origin v0.3.0
 ```
-
-## Liens utiles
-
-- [React](https://reactjs.org/)
-- [create-react-app](https://create-react-app.dev/)
-- [React - Les principaux concepts](https://but-sd.github.io/guide-react/)
