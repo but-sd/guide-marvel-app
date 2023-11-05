@@ -2,14 +2,14 @@
 
 ## Objectifs
 
-Support de présentation : TODO
-
-La version 1.0.0 va apporter les modifications suivantes :
-
 - Création de la page de détail d'un charactère
-- Création d'un workflow pour vérifier que le code build
+- Sécurisation du projet
+    - Création d'un workflow pour vérifier que le code build
+    - Protection des branches `main` et `develop`
+- Création de pull request pour valider les modifications
+- Création d'une release 1.0.0 et déploiement de l'application
 
-Les modifications seront faites via une branche `character-detail` à partir de la branche `develop`.
+Flow git de la version 1.0.0 :
 
 ```mermaid
 gitGraph
@@ -37,13 +37,11 @@ gitGraph
     merge main
 ```
 
-Nous passons de 0.4.0 à 1.0.0, modification de numéro de version majeure. L'application en version 1.0.0 est une application fonctionnelle et stable, elle peut être utilisée en production.
-
-Nous allons proposer la validation de la feature au travers d'une pull request.
-
 Afin de recetter et déployer "officiellement" la version 1.0.0, nous allons utiliser le service cloud **netlify**.
 
-## Gestion des numéros de version
+**Gestion des numéros de version**
+
+Nous passons de 0.4.0 à 1.0.0, modification de numéro de version majeure. L'application en version 1.0.0 est une application fonctionnelle et stable, elle peut être utilisée en production.
 
 Nous utilisons la convention de numérotation [semver](https://semver.org/lang/fr/){target=_blank}. Cette convention permet de définir le numéro de version d'un projet. Le numéro de version est composé de 3 nombres séparés par des points :
 
@@ -55,23 +53,11 @@ Le concept de version majeure, mineure et de patch est utilisé pour définir la
 
 Dans le cadre d'un projet web, il n'y a pas cette contrainte de dépendances entre projets. Cependant, il est intéressant d'utiliser cette convention pour définir les grandes fonctionnalités de l'application. 
 
-Le numéro de version majeure permet de mettre en avant la mise à disposition de nouvelles grandes fonctionnalités de l'application. 
+- Le numéro de version majeure permet de mettre en avant la mise à disposition de nouvelles grandes fonctionnalités de l'application. 
+- Le numéro de version mineure permet de mettre en avant la mise à disposition de nouvelles fonctionnalités plus petites de l'application.
+- Le numéro de version de patch permet de mettre en avant la mise à disposition de corrections de bugs de l'application.
 
-Le numéro de version mineure permet de mettre en avant la mise à disposition de nouvelles fonctionnalités plus petites de l'application.
-
-Le numéro de version de patch permet de mettre en avant la mise à disposition de corrections de bugs de l'application.
-
-## Pull request
-
-La Pull Request est une fonctionnalité de GitHub qui permet de proposer la validation de modifications du code source d'un projet. 
-
-La pull request va permettre de discuter des modifications proposées avant de les intégrer au projet, de mettre en oeuvre la revue de code, pratique qui consiste à faire relire son code par un autre développeur. Cela permet de s'assurer de la qualité du code et de partager les connaissances entre les développeurs. La revue de code est une pratique très répandue dans les entreprises.
-
-De plus, nous verrons plus tard que la pull request va permettre de mettre en oeuvre des contrôles avant de valider les modifications. Par exemple, nous allons vérifier que les tests unitaires et les tests d'intégration sont passés. Nous allons aussi vérifier que la qualité du code est suffisante. 
-
-Quelques expliquations sur les pull requests, [voir](https://but-sd.github.io/guide-github/pull-request/){target=_blank}.
-
-## Création de la branche `feature/character-detail`
+## Création de la page de détail d'un charactère
 
 Créer une branche `feature/character-detail` avec la commande suivante :
 
@@ -80,7 +66,7 @@ git switch develop
 git switch -c feature/character-detail
 ```
 
-## Création de l'api `character-api`
+### character-api
 
 Créer un fichier `src/api/character-api.js` avec le contenu suivant :
 
@@ -119,13 +105,11 @@ L'api `character-api` permet de récupérer les données des personnages. Nous a
 - `getCharacters` : permet de récupérer tous les personnages
 - `getCharacterById` : permet de récupérer un personnage par son id
 
-
-
-## Modification du code existant
+Remarque : Il s'agit d'une version minimaliste d'une api pour illustrer la séparation entre le code de l'application et les données. Nous pourrons ainsi plus tard remplacer les données par des données provenant d'une api externe.
 
 Nous allons modifier le code de l'application pour utiliser cette api, et utiliser la fonctionnalité `loader` de react-router pour charger les données avant d'afficher les pages. Cette fonctionnalité permet de séparer le chargement des données de l'affichage des pages.
 
-### Modification de la définition des routes
+**Modification de la définition des routes**
 
 Modifier le fichier `src/routes.js` avec le contenu suivant :
 
@@ -173,7 +157,7 @@ Nous avons ajouté la propriété `loader` sur la route `/` pour charger les per
 
 Nous avons aussi ajouté la route `/characters/:characterId` pour afficher la page de détail d'un personnage. Nous appelons les fonctions `getCharacters` et `getCharacterById` de notre api `character-api`.
 
-### Modification de la page CharactersPage
+**Modification de la page CharactersPage**
 
 Modifier le fichier `src/pages/CharactersPage.js` avec le contenu suivant :
 
@@ -204,7 +188,7 @@ export default CharactersPage;
 
 Nous avons modifier le composant `CharactersPage` pour utiliser le hook `useLoaderData` de react-router. Ce hook permet de récupérer les données chargées par la fonction `loader` de la route. Nous avons donc déporté le chargement des personnages dans la route `/` et nous récupérons les personnages dans le composant `CharactersPage` avec le hook `useLoaderData`. 
 
-### Modification du composant `CharactersList`
+**Modification du composant CharactersList**
 
 Modifier le fichier `src/components/CharactersList.js` avec le contenu suivant :
 
@@ -226,7 +210,7 @@ export function CharactersList({ characters = [] }) {
 
 Nous avons modifié le composant `CharactersList` pour ajouter un lien vers la page de détail d'un personnage. Nous utilisons la propriété `id` du personnage pour construire l'url de la page de détail du personnage.
 
-### Modification du style
+**Modification du style**
 
 Modifier le fichier `src/style.css` avec le contenu suivant :
 
@@ -281,7 +265,7 @@ footer {
 
 Nous avons moidifié les styles pour le éléments de type lien, afin d'avoir un style différent entre les liens du menu et les liens de la liste des personnages
 
-### Modification des données
+**Modification des données**
 
 Afin d'afficher les détails d'un charactère nous allons ajouter des données dans le fichier `data/characters.json`
 
@@ -396,7 +380,7 @@ Afin d'afficher les détails d'un charactère nous allons ajouter des données d
 ]
 ```
 
-## Création de la page `CharacterDetailPage`
+### CharacterDetailPage
 
 Créer un fichier `src/pages/CharacterDetailPage.js` avec le contenu suivant :
 
@@ -426,7 +410,7 @@ export default CharacterDetailPage;
 
 Nous avons créé la page `CharacterDetailPage` qui affiche le détail d'un personnage. Nous utilisons le hook `useLoaderData` pour récupérer le personnage chargé par la fonction `loader` de la route. Nous utilisons le hook `useEffect` pour mettre à jour le titre de la page web avec le nom du personnage. Nous utilisons le composant `CharacterDetail` pour afficher le détail du personnage.
 
-## Création du composant `CharacterDetail`
+### CharacterDetail
 
 Créer un fichier `src/components/CharacterDetail.js` avec le contenu suivant :
 
@@ -449,7 +433,7 @@ export default CharacterDetail;
 ```
 Nous affichons le nom, la description, la date de modification et l'image du personnage. L'api peut ne pas renvoyer l'image du personnage, nous vérifions donc que la propriété `thumbnail` n'est pas nulle avant d'afficher l'image afin d'éviter une erreur.
 
-## Commit et push des modifications
+Commiter et pusher les modifications :
 
 ```bash
 git add .
@@ -457,9 +441,12 @@ git commit -m "Add character detail page"
 git push --set-upstream origin feature/character-detail
 ```
 
-## Sécurisation des branches
+## Sécurisation du projet
 
-Nous allons protéger les branches `main` et `develop` afin d'éviter de les modifier directement. Nous allons aussi ajouter des `status checks` pour vérifier que le code poussé sur les branches `main` et `develop` respecte certaines règles.
+Afin de sécuriser le projet, nous allons mettre en place des contrôles avant de valider les modifications appportées au code source des branches `main` et `develop`:
+
+- contrôle que le code build correctement et que la qualité du code est suffisante (version basique que nous améliorerons plus tard)
+- contrôle que les modifications sont validées par un autre développeur avant d'être intégrées au projet
 
 #### Créaction d'un wokflow pour vérifier que le code build
 
@@ -504,7 +491,7 @@ Une fois le workflow créé, nous pouvons le tester en modifiant le code source 
 
 Si le workflow échoue, il est possible de voir les logs d'exécution du workflow en cliquant sur le nom du workflow dans la page des actions du projet sur GitHub. Cela permet de voir les erreurs et de les corriger ensuite en local avant de pousser les modifications sur GitHub.
 
-### Commit et push des modifications
+Commiter et pusher les modifications :
 
 ```bash
 git add .
@@ -525,6 +512,12 @@ Et pour l'ajout des `status checks`, [voir](https://but-sd.github.io/guide-githu
 
 ## Pull request
 
+La Pull Request est une fonctionnalité de GitHub qui permet de proposer la validation de modifications du code source d'un projet. 
+
+La pull request va permettre de discuter des modifications proposées avant de les intégrer au projet, de mettre en oeuvre la revue de code, pratique qui consiste à faire relire son code par un autre développeur. Cela permet de s'assurer de la qualité du code et de partager les connaissances entre les développeurs. La revue de code est une pratique très répandue dans les entreprises.
+
+Quelques expliquations sur les pull requests, [voir](https://but-sd.github.io/guide-github/pull-request/){target=_blank}.
+
 ### Création de la pull request
 
 Maintenant que nous avons terminé la feature `character-detail` et protégé les branches `main` et `develop`, nous allons proposer la validation de la feature au travers d'une pull request. Nous allons utiliser la fonctionnalité `compare` de GitHub pour comparer la branche `feature/character-detail` avec la branche `develop` et utiliser la fonctionnalité `create pull request` de GitHub pour créer la pull request.
@@ -543,25 +536,19 @@ Remarque : Pour pouvoir avoir accès à la fonctionnalité `reviewers`, il faut 
 
 Les pull requests sont visibles dans l'onglet `Pull requests` du repository. Nous pouvons voir la pull request que nous venons de créer.
 
-![Pull request](./images/pull-requests.png)
-
-Nous pouvons voir que la pull request a échoué. En cliquant sur la pull request, nous pouvons voir que le code de la pull request ne passe pas les `status checks`.
-
-![Pull request failed](./images/pull-request-failed.png)
-
-Il faut donc corriger le code avant de pouvoir valider la pull request.
-
 ### Validation de la pull request
 
 ![Pull request ok](./images/pull-request-ok.png)
 
-Une fois tout les status checks passés, nous pouvons valider la pull request, en utilisant la fonctionnalité `merge pull request`. Nous pouvons voir que la pull request est validée et que le code est mergé sur la branche `develop`.
+Une fois l'ensemble des status checks passés, nous pouvons valider la pull request, en utilisant la fonctionnalité `merge pull request`. Nous pouvons voir que la pull request est validée et que le code est mergé sur la branche `develop`.
 
 ![Pull request merged](./images/pull-request-merged.png)
 
 ## Release
 
 ### Préparation
+
+Le workflow de développement gitflow prévoit la création d'une branche `release` à partir de la branche `develop` pour préparer la mise en production d'une nouvelle version de l'application. Cette branche va permettre de tester l'application avant de la mettre en production, voir [guide-git](https://but-sd.github.io/guide-git/branches/#git-flow){target=_blank} pour plus d'explications.
 
 Nous allons créer une branche `release/1.0.0` à partir de la branche `develop` avec la commande suivante :
 
@@ -630,19 +617,23 @@ Si des bugs sont détectés, ils seront corrigés sur la branche `release/1.0.0`
 
 #### Déploiement sur netlify
 
-Nous allons déployer l'application sur netlify. netlify est un service cloud qui permet de déployer des applications web.
+Nous allons déployer l'application sur **netlify**. netlify est un service cloud qui permet de déployer des applications web.
 
-Créer un compte sur netlify, [voir](https://app.netlify.com/signup){target=_blank} avec le compte GitHub.
+Créer un compte sur [netlify](https://app.netlify.com/signup){target=_blank} avec le compte GitHub.
 
 Dans la partie `Site Configuration/Build & Deploy/Continuous Deployment`, dans la section `Branches and deploy contexts` cliquer sur `configure`. La Production branch doit être `main` et `Any pull request again your production branch` doit être cochée.
 
-Cela va nous permettre d'avoir un déploiement automatique de l'application à chaque push sur la branche `main` et à chaque pull request sur la branche `main`. Nous pourrons ainsi avoir en parallèle la branche de production et les branches de 'recette'.
+Cela va nous permettre d'avoir un déploiement automatique de l'application à chaque push sur la branche `main` et à chaque pull request sur la branche `main`. Nous pourrons ainsi avoir en parallèle la branche de production et les branches de "recette".
+
+#### Création de la pull request release/1.0.0
+
+Créer une pull request `release/1.0.0` à partir de la branche `release/1.0.0` vers la branche `main`.
 
 Grâce à la configuration ci-dessus, la création de la pull request `release/1.0.0` va déclencher un déploiement de l'application sur netlify. Nous pourrons ainsi tester l'application avant de la mettre en production.
 
 netlify va mettre à jour la pull request avec le lien vers l'application déployée.
 
-Afin de d'avoir une application fonctionnelle, nous devons ajouter un fichier `_redirects` à la racine du projet avec le contenu suivant:
+Afin d'avoir une application fonctionnelle, nous devons ajouter un fichier `_redirects` à la racine du projet avec le contenu suivant:
 
 ```
 /*    /index.html   200
@@ -658,7 +649,7 @@ git commit -m "Add _redirects file"
 git push
 ```
 
-### Mise à jour de la branche `main`
+### Mise à jour des branches main et develop
 
 Une fois la recette utilisateur terminée et les bugs corrigés, la branche `release/1.0.0` est validée et nous pouvons la mettre en production en figeant la version à `1.0.0`.
 
@@ -680,6 +671,10 @@ git push
 
 Nous pouvons valider la pull request `release/1.0.0`. Nous pouvons aussi supprimer la branche `release/1.0.0` car elle n'est plus utile.
 
+Une fois la branche `main` à jour avec les fonctionnalités de la branche `release/1.0.0`, nous allons mettre à jour la branche `develop` pour récupérer les fonctionnalités de la branche `release/1.0.0`.
+
+Pour cela nous allons créer et valider une pull request de `main` vers `develop`.
+
 ### Création de la release
 
 Nous allons utiliser la fonctionnalité `create release` de GitHub pour créer la release. La release ce base sur un tag git et ajoute des fonctionnalités supplémentaires. La release est visible dans l'onglet `Releases` du repository.
@@ -687,9 +682,3 @@ Nous allons utiliser la fonctionnalité `create release` de GitHub pour créer l
 Elle permet d'ajouter des notes de version, des captures d'écran, etc... Elle permet aussi de télécharger le code source de la release.
 
 ![Create release](./images/create-release.png)
-
-### Mise à jour de la branche `develop`
-
-Une fois la branche `main` à jour avec les fonctionnalités de la branche `release/1.0.0`, nous allons mettre à jour la branche `develop` pour récupérer les fonctionnalités de la branche `release/1.0.0`.
-
-Pour cela nous allons créer et valider une pull request de `main` vers `develop`.

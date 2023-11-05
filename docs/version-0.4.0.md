@@ -2,15 +2,11 @@
 
 ## Objectifs
 
-Support de présentation :  [marvel-app-0.4.0.pdf](./slides/marvel-app-0.4.0.pdf){target=_blank}
-
-La version 0.4.0 va apporter les modifications suivantes :
-
 - création de plusieurs pages (Home, About, Contact)
 - utilisation de react-router pour gérer la navigation entre les pages
 - mise en oeuvre d'un layout pour les pages (header, footer, etc...)
 
-Les modifications seront faites via une branche `feature/routers` à partir de la branche `develop`.
+Flow git de la version 0.4.0 :
 
 ```mermaid
 gitGraph
@@ -28,8 +24,6 @@ gitGraph
     commit tag: "v0.4.0"
 ```
 
-## Création de pages
-
 Basculer sur la branche `develop` et créer une nouvelle branche `feature/routers` à partir de la branche `develop`.
 
 ```bash
@@ -38,7 +32,11 @@ git pull
 git switch -c feature/routers
 ```
 
-### About
+## Création de pages
+
+Une page n'est rien d'autre qu'un composant React. Nous allons donc créer un composant pour chaque page.
+
+### AboutPage
 
 Créer un fichier `src/pages/AboutPage.js` avec le contenu suivant :
 
@@ -61,7 +59,9 @@ const AboutPage = () => {
 export default AboutPage;
 ```
 
-### Contact
+La page `AboutPage` est une page statique. Elle affiche simplement un titre et un paragraphe. Le titre de la page est défini dans le hook `useEffect` qui est appelé à chaque fois que le composant est monté. Le titre de la page est donc modifié à chaque fois que la page est affichée.
+
+### ContactPage
 
 Créer un fichier `src/pages/ContactPage.js` avec le contenu suivant :
 
@@ -84,8 +84,9 @@ const ContactPage = () => {
 };
 
 export default ContactPage;
-
 ```
+
+Comme pour la page `AboutPage`, la page `ContactPage` est une page statique. Elle affiche simplement un titre et un paragraphe. Le titre de la page est défini dans le hook `useEffect` qui est appelé à chaque fois que le composant est monté. Le titre de la page est donc modifié à chaque fois que la page est affichée.
 
 ### CharactersPage
 
@@ -115,9 +116,12 @@ const CharactersPage = () => {
 export default CharactersPage;
 ```
 
-On remarque que la page `CharactersPage` utilise les composants `CharactersList` et `NumberOfCharacters` et le fichier `characters.json`. Ceux-ci ne sont pas au même niveau de l'arborescence que la page `CharactersPage`. Il faut donc remonter d'un niveau pour accéder à ces fichiers.
+La page `CharactersPage` utilise les composants `CharactersList` et `NumberOfCharacters` et le fichier `characters.json`. Ceux-ci ne sont pas au même niveau de l'arborescence que la page `CharactersPage`. Il faut donc remonter d'un niveau pour accéder à ces fichiers. 
 
-## Modification de l'application pour utiliser les pages
+Le chargement des personnages est pour l'instant statique, nous verrons plus tard comment charger les personnages depuis une API. Les données sont ensuite passées aux composants `CharactersList` et `NumberOfCharacters` via des props.
+
+## Utilisation des pages
+
 Modifier le fichier `App.js` pour ajouter les pages `About`, `Contact` et `CharactersPage` :
 
 ```javascript
@@ -142,9 +146,7 @@ export default App;
 
 On remarque que les pages sont affichées les unes à la suite des autres. Il faut donc ajouter un système de navigation pour pouvoir afficher une seule page à la fois.
 
-## Gérer la navigation entre les pages
-
-### react-router
+## Navigation entre les pages
 
 **react-router** est une librairie qui permet de gérer la navigation entre les pages d'une application React.
 
@@ -285,6 +287,8 @@ export default Layout;
 Dans cette nouvelle version du composant `Layout`, nous utilisons le composant `Outlet` de react-router à la place de `children`. Ce composant va afficher le contenu de la page en fonction de l'URL. 
 
 Nous utilisons également le composant `NavLink` de react-router pour créer des liens entre les pages, ce composant va ajouter la classe `active` sur le lien correspondant à la page affichée. Nous pourrons donc ajouter un style pour mettre en évidence le lien actif.
+
+De plus les liens créés par le composant `NavLink` ou `Link` vont utiliser le router de react-router, ce qui va permettre de naviguer entre les pages sans recharger la page.
 
 Remplacer le contenu du fichier `App.js` par le contenu suivant :
 
