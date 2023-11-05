@@ -2,12 +2,11 @@
 
 ## Objectifs
 
-La version 0.2.0 va apporter les modifications suivantes :
-
+- Utilisation de git pour travailler sur plusieurs fonctionnalités en même temps
 - Ajout de contenu JavaScript pour récupérer des données depuis un fichier JSON
 - Ajout de style CSS pour améliorer l'affichage
 
-Bien que les modifications soient mineures, nous allons voir comment utiliser git pour travailler sur le projet et nous faciliter la vie. Nous allons pouvoir travailler sur les deux fonctionnalités en même temps, et les sauvegarder indépendamment. Nous allons utiliser les branches de git pour cela, en respectant un workflow de développement, appelé [Gitflow](https://but-sd.github.io/memo-git/branches/#git-flow){:target="_blank"}.
+Flow git de la version 0.2.0 :
 
 ```mermaid
 gitGraph
@@ -32,9 +31,13 @@ gitGraph
 
 ## Préparation des branches de travail
 
+Bien que les modifications soient mineures, nous allons voir comment utiliser git pour travailler sur le projet et nous faciliter la vie. Nous allons pouvoir travailler sur les deux fonctionnalités en même temps, et les sauvegarder indépendamment. Nous allons utiliser les branches de git pour cela, en respectant un workflow de développement, appelé [Gitflow](https://but-sd.github.io/memo-git/branches/#git-flow){:target="_blank"}.
+
 ### Création de la branche `develop`
 
-Nous allons créer une branche `develop` pour travailler sur les deux fonctionnalités en même temps. Nous allons ensuite créer une branche pour chaque fonctionnalité.
+La branche `develop` va nous permettre de travailler sur les deux fonctionnalités sans modifier la branche `main`. La branche `main` contient la version stable du projet. Nous allons donc créer la branche `develop` à partir de la branche `main`.
+
+Pour travailler sur les deux fonctionnalités en même temps. Nous allons ensuite créer une branche pour chaque fonctionnalité.
 
 Créer la branche `develop` avec l'une des commandes suivante :
 
@@ -56,30 +59,26 @@ Ces deux commandes créeront la branche `develop` à partir de la branche active
 git branch --show-current
 ```
 
-### Création des branches `feature/style` et `feature/data`
+### Création des branches feature/*
 
 Nous allons créer deux branches pour les deux fonctionnalités. Nous allons créer les branches `feature/style` et `feature/data` à partir de la branche `develop`.
 
-Créer les branches `feature/style` et `feature/data` avec l'une des commandes suivante :
+Créer les branches `feature/style` et `feature/data` avec les commandes suivante :
 
 ```bash
 git switch -c feature/style develop
 git switch -c feature/data develop
 ```
 
-Le dernier argument de la commande `git checkout` ou `git switch` est la branche à partir de laquelle nous allons créer la nouvelle branche.
+Le dernier argument de la commande `git switch` est la branche à partir de laquelle nous allons créer la nouvelle branche.
 
 ## Ajout de style
-
-### Positionnement sur la branche `feature/style`
 
 Se positionner sur la branche `feature/style` avec la commande suivante :
 
 ```bash
 git switch feature/style
 ```
-
-### Ajout de contenu CSS
 
 Modifier le fichier `style.css` pour remplacer son contenu par le contenu suivant :
 
@@ -125,8 +124,6 @@ git commit -m "Add style"
 
 ## Ajout de contenu dynamique
 
-### Positionnement sur la branche `feature/data`
-
 Se positionner sur la branche `feature/data` avec la commande suivante :
 
 ```bash
@@ -135,7 +132,7 @@ git switch feature/data
 
 ### Récupération des données
 
-#### Simulation d'un appel d'API
+**Simulation d'un appel d'API**
 
 Dans un premier temps, nous allons simuler un appel d'API pour récupérer des données. Nous verrons plus tard comment appeler une API. Pour cela nous allons charger les données depuis un fichier JSON (**J**ava**S**cript **O**bject **N**otation).
 
@@ -182,7 +179,7 @@ Créer le fichier `src/data/characters.json` avec le contenu suivant :
 
 Le fichier `characters.json` contient un tableau d'objets. Chaque objet représente un personnage. Chaque personnage a un attribut `name` qui contient le nom du personnage.
 
-#### Récupération des données
+**Récupération des données**
 
 Pour récupérer les données depuis le fichier JSON, nous allons utiliser la fonction `fetch` de JavaScript. Cette fonction permet de faire des requêtes HTTP.
 
@@ -222,7 +219,9 @@ Ouvrir la console du navigateur web. Vous devriez voir le tableau des personnage
 
 Pour plus de détails sur les promesses, vous pouvez consulter la documentation de [guide-html](https://but-sd.github.io/guide-html/js/#async-await){:target="_blank"}.
 
-#### Ajout des personnages à la liste
+### Affichage des données
+
+**Appel de la fonction**
 
 Modifier le fichier `index.html` pour supprimer les éléments de la liste qui sont en dur et ajouter le script `script.js` pour charger dynamiquement les personnages :
 
@@ -253,7 +252,7 @@ git add .
 git commit -m "Add data"
 ```
 
-### Affichage des personnages
+**Affichage des personnages**
 
 Modifier le fichier `script.js` pour afficher les personnages dans la liste :
 
@@ -294,9 +293,9 @@ git commit -m "Add characters"
 
 Nous avons terminé de travailler sur les deux fonctionnalités. Nous allons fusionner les deux branches vers la branche `develop`.
 
-## Merge vers develop
+## Mise à jour des branches
 
-### Merge de `feature/style`
+### Merge de feature/style
 
 Nous allons fusionner la branche `feature/style` vers la branche `develop`. La fusion permet de combiner les modifications de deux branches. 
 
@@ -314,14 +313,20 @@ git merge feature/style -m "merge feature/style"
 
 La commande `git merge` va créer un nouveau commit de fusion. Ce commit de fusion va combiner les modifications de la branche `feature/style` vers la branche `develop`. Nous avons donc à ce moment là la branche `develop` qui contient les modifications de la branche `feature/style`.
 
-### Merge de la branch `feature/data` vers la branche `develop`
+Une fois merger, la branche `feature/style` n'est plus utile. Nous pouvons la supprimer avec la commande suivante :
+
+```bash
+git branch -d feature/style
+```
+
+### Merge de feature/data
 
 Nous allons maintenant fusionner la branche `feature/data` vers la branche `develop`. 
 
 ``` bash
 git switch develop
-
 git merge feature/data -m "merge feature/data"
+git branch -d feature/data
 ```
 
 Il ne devrait pas y avoir de conflit. Si vous avez un conflit, il faut le résoudre avant de continuer.
@@ -332,13 +337,14 @@ La branche `develop` contient maintenant les modifications des deux branches `fe
 git push origin develop
 ```
 
-### Merge de la branche `develop` vers la branche `main`
+### Merge de develop
 
-Les deux fonctionnalités sont terminées. On constate que la branche `develop` contient les modifications des deux fonctionnalités et que celle-ci est pleinnement fonctionnelle. Notre version 0.2.0 est donc terminée. Nous allons maintenant fusionner la branche `develop` vers la branche `main`. La branche `main` est la branche principale du projet. Elle contient les versions stables du projet, c'est à dire les versions qui sont prêtes à être utilisées en production.
+Les deux fonctionnalités sont terminées. On constate que la branche `develop` contient les modifications des deux fonctionnalités et que celle-ci est pleinnement fonctionnelle. Notre version 0.2.0 est donc terminée.
+
+Nous allons maintenant fusionner la branche `develop` vers la branche `main`. La branche `main` est la branche principale du projet. Elle contient les versions stables du projet, c'est à dire les versions qui sont prêtes à être utilisées en production.
 
 ```bash
 git switch main
-
 git merge develop -m "merge develop"
 ```
 
@@ -348,36 +354,11 @@ Nous pouvous maintenant pousser la branche `main` sur GitHub.
 git push origin main
 ```
 
-### Création du tag `v0.2.0`
+## Tag de la version 0.2.0
 
-Afin de marquer la version 0.2.0, nous allons créer un tag. Un tag permet de marquer un commit. Cela nous permettra de retrouver facilement les différentes versions de notre projet.
-
-Créer un tag `v0.2.0` avec la commande suivante :
+Créer un tag `v0.2.0` et pousser le sur GitHub avec les commandes suivantes :
 
 ```bash
 git tag v0.2.0 -m "version 0.2.0"
-```
-
-Envoyer le tag `v0.2.0` sur GitHub avec la commande suivante :
-
-```bash
 git push origin v0.2.0
 ```
-
-### Suppression des branches `feature/style` et `feature/data`
-
-Les branches `feature/style` et `feature/data` ne sont plus utiles. Nous pouvons les supprimer avec la commande suivante :
-
-```bash
-git branch -d feature/style
-git branch -d feature/data
-```
-
-## Conclusion
-
-Grâce à cette version `0.2.0` nous avons pu :
-
-- Ajouter du contenu dynamique à notre page web
-- Ajouter du style à notre page web
-- Utiliser le concept de branche pour travailler sur plusieurs fonctionnalités en même temps
-- Utiliser le concept de fusion pour combiner les modifications de deux branches
