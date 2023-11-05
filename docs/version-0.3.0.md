@@ -135,7 +135,7 @@ Le fichier `App.js`  est un fichier javascript qui exporte une fonction `App`. O
 
 Quelques explications sur le JSX, [voir](https://but-sd.github.io/guide-react/syntaxe-jsx/){target=_blank}.
 
-Pour la documentation officielle de react sur la partie JSX [voir](https://reactjs.org/docs/introducing-jsx.html){target=_blank}.
+Pour la documentation officielle de react sur la partie JSX [voir](https://react.dev/learn/writing-markup-with-jsx#jsx-putting-markup-into-javascript){target=_blank}.
 
 ### Liste dynamique des charactères
 
