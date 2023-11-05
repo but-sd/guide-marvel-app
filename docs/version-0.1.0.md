@@ -62,7 +62,7 @@ Créer un nouveau projet sur [GitHub](https://github.com){:target="_blank"} avec
 
 Cela va créer un nouveau dépôt de code sur GitHub, avec un fichier README.md. Le fichier README.md est un fichier au format Markdown, qui permet de documenter le projet. Nous verrons plus tard comment utiliser Markdown.
 
-**Clonage du projet**
+**Récupération du projet en local**
 
 Cloner le projet sur votre ordinateur avec la commande suivante :
 
