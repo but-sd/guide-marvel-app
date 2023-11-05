@@ -2,14 +2,16 @@
 
 ## Objectifs
 
-Dans cette première version 0.1.0, nous allons implémenter les fonctionnalités suivantes :
-
-- Utilisation de git pour gérer l'historique des modifications du projet
-- Utilisation de npm pour gérer les dépendances du projet
-- Implémentation d'une page web avec HTML, CSS et JavaScript
+- Initialisation du projet
+    - Utilisation de git pour gérer l'historique des modifications du projet
+    - Utilisation de npm pour gérer les dépendances du projet
+    - Utilisation de browser-sync pour créer un serveur web local
+- Implémentation d'une page web
     - Contenu statique de la page HTML (**H**yper**T**ext **M**arkup **L**anguage)
     - Application du style avec CSS (**C**ascading **S**tyle **S**heets)
-    - Ajout d'interactivité avec **J**ava**S**cript pour afficher les personnages de Marvel
+- Sauvegarde du projet sur GitHub
+
+Flow git de la version 0.1.0 :
 
 ```mermaid
 gitGraph
@@ -22,7 +24,7 @@ gitGraph
 
 ## Prérequis
 
-### Installation de Node.js
+**Installation de Node.js**
 
 Node.js est un environnement d'exécution JavaScript. Il permet d'exécuter du code JavaScript en dehors d'un navigateur web. Il est basé sur le moteur JavaScript V8 de Google, qui est le moteur JavaScript utilisé par le navigateur Chrome.
 
@@ -32,7 +34,7 @@ Dans un premier temps, nous allons utiliser Node.js pour installer des dépendan
 
 Nous irons plus loin avec Node.js plus tard, pour utiliser des librairies JavaScript telles que React, qui est une librairie JavaScript développée par Facebook, qui permet de créer des interfaces utilisateur.
 
-### Installation de Visual Studio Code
+**Installation de Visual Studio Code**
 
 Visual Studio Code est un éditeur de code open source, développé par Microsoft. Il est disponible pour Windows, Mac et Linux.
 
@@ -40,7 +42,7 @@ Pour installer Visual Studio Code, rendez-vous sur le site officiel : [https://c
 
 Visual Studio Code est un éditeur de code très complet, qui permet de développer dans de nombreux langages de programmation. Il est très utilisé par les développeurs JavaScript, car il permet d'installer des extensions pour améliorer l'expérience de développement. Nous verrons plus tard comment installer des extensions pour Visual Studio Code.
 
-### Installation de Git
+**Installation de Git**
 
 Git est un logiciel de gestion de versions décentralisé. Il permet de gérer l'historique des modifications d'un projet. Il est utilisé par GitHub, qui est un service web d'hébergement et de gestion de code source.
 
@@ -52,13 +54,15 @@ Il est toutefois nécessaire d'appliquer quelques configurations avant de pouvoi
 
 ## Initialisation du projet
 
-### Création du projet sur GitHub
+### git / GitHub
+
+**Création du projet sur GitHub**
 
 Créer un nouveau projet sur [GitHub](https://github.com){:target="_blank"} avec le nom `marvel-app`. Cocher la case `Initialize this repository with a README`.
 
 Cela va créer un nouveau dépôt de code sur GitHub, avec un fichier README.md. Le fichier README.md est un fichier au format Markdown, qui permet de documenter le projet. Nous verrons plus tard comment utiliser Markdown.
 
-### Clonage du projet
+**Clonage du projet**
 
 Cloner le projet sur votre ordinateur avec la commande suivante :
 
@@ -66,9 +70,9 @@ Cloner le projet sur votre ordinateur avec la commande suivante :
 git clone url-du-projet
 ```
 
-### Initialisation du projet avec npm
+### npm
 
-Créer un nouveau projet avec la commande suivante :
+Initialiser le projet npm avec la commande suivante :
 
 ```bash
 npm init -y
@@ -84,9 +88,13 @@ Modifier le fichier généré pour mettre la version du projet à `0.1.0` :
 }
 ```
 
-### Installation des dépendances
+### browser-sync
 
-Installer la dépendance suivante :
+`browser-sync` est une dépendance qui permet de créer un serveur web local, avec un rechargement automatique du navigateur à chaque modification du code source. Cela nous permettra de tester simplement la première version de notre application en local.
+
+**Installation**
+
+Installer la dépendance `browser-sync` avec la commande suivante :
 
 ```bash
 npm install --save-dev browser-sync
@@ -94,7 +102,6 @@ npm install --save-dev browser-sync
 
 Cela va installer la dépendance `browser-sync` dans le dossier `node_modules` du projet. La dépendance sera ajoutée dans la liste des dépendances du projet dans le fichier `package.json`. L'option `--save-dev` permet d'ajouter la dépendance dans la liste des dépendances de développement. Cela permet de distinguer les dépendances de développement des dépendances de production.
 
-`browser-sync` est une dépendance qui permet de créer un serveur web local, avec un rechargement automatique du navigateur à chaque modification du code source. Cela nous permettra de tester simplement la première version de notre application en local.
 
 Les fichiers présents dans le dossier `node_modules` ne doivent pas être versionnés. Nous allons donc les ignorer en créant un fichier `.gitignore` à la racine du projet avec le contenu suivant :
 
@@ -102,7 +109,7 @@ Les fichiers présents dans le dossier `node_modules` ne doivent pas être versi
 node_modules
 ```
 
-### Configuration de browser-sync
+**Configuration**
 
 Créer un fichier `bs-config.js` à la racine du projet avec le contenu suivant :
 
@@ -119,7 +126,7 @@ module.exports = {
 
 Ce fichier permet de configurer browser-sync. Nous indiquons que nous souhaitons surveiller les fichiers html, css et js dans le dossier `src`, et que le serveur web doit servir les fichiers du dossier `src`.
 
-### Ajout de scripts npm
+**Exécution**
 
 Modifier le fichier `package.json` pour ajouter les scripts suivants :
 
@@ -136,8 +143,6 @@ Cela nous permettra de lancer le serveur web local avec la commande suivante :
 ```bash
 npm start
 ```
-
-### Création du dossier `src`
 
 Créer un dossier `src` à la racine du projet. Ce dossier contiendra le code source de notre application.
 
@@ -172,9 +177,9 @@ git add .
 git commit -m "Hello, World!"
 ```
 
-## Ajout de contenu statique
+## Implémentation d'une page web
 
-### Ajout de contenu HTML
+### HTML
 
 Modifier le fichier `index.html` pour mettre le contenu suivant :
 
@@ -215,7 +220,7 @@ git add .
 git commit -m "Add static content"
 ```
 
-### Ajout de contenu CSS
+### CSS
 
 Créer un fichier `src/style.css` avec le contenu suivant :
 
@@ -225,7 +230,6 @@ body {
     margin: 0;
     padding: 0;
 }
-
 ```
 
 Modifier le fichier `index.html` pour ajouter le lien vers le fichier `style.css` :
@@ -272,7 +276,7 @@ git add .
 git commit -m "Add style"
 ```
 
-### Push des modifications
+## Sauvegarde du projet sur GitHub
 
 Envoyer les modifications sur GitHub avec la commande suivante :
 
@@ -280,7 +284,7 @@ Envoyer les modifications sur GitHub avec la commande suivante :
 git push
 ```
 
-### Création du tag `v0.1.0`
+**Création d'un tag**
 
 Créer un tag `v0.1.0` avec la commande suivante :
 
@@ -295,15 +299,3 @@ Envoyer le tag `v0.1.0` sur GitHub avec la commande suivante :
 ```bash
 git push origin v0.1.0
 ```
-
-## Conclusion
-
-Grâce à cette première version 0.1.0, nous avons appris à :
-
-- Préparer notre environnement de développement avec Node.js, Visual Studio Code et Git
-- Outiller notre projet pour faciliter le développement (browser-sync)
-- Utiliser git pour gérer l'historique des modifications du projet
-- Utiliser npm pour gérer les dépendances du projet
-- Implémenter une page web avec HTML, CSS
-    - Contenu statique de la page HTML (**H**yper**T**ext **M**arkup **L**anguage)
-    - Application du style avec CSS (**C**ascading **S**tyle **S**heets)
