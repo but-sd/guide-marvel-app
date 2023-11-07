@@ -64,6 +64,8 @@ Cela va créer un nouveau dépôt de code sur GitHub, avec un fichier README.md.
 
 **Récupération du projet en local**
 
+Remarque: Le projet doit être récupéré en local sur votre compte utilisateur Windows ( par exemple dans un dossier `dev`), et non pas dans un dossier partagé sur un serveur (lecteur réseau Z:), cela pose en effet des problèmes lors de l'exécution de certaines commandes.
+
 Cloner le projet sur votre ordinateur avec la commande suivante :
 
 ```bash
