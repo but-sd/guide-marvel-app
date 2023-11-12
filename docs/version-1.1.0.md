@@ -359,57 +359,60 @@ Créer un fichier `src/components/CharactersList.test.js` avec le contenu suivan
 ```javascript
 import { render, screen } from '@testing-library/react';
 import { CharactersList } from './CharactersList';
+import { BrowserRouter } from 'react-router-dom'
+
 
 describe('CharactersList', () => {
-  
-  it('renders a list of characters', () => {
-    // when
-    const characters = [
-      { id: 1, name: 'Iron Man' },
-      { id: 2, name: 'Captain America' },
-      { id: 3, name: 'Thor' },
-    ];
 
-    // then
-    render(<CharactersList characters={characters} />);
-    
-    // expect a list with the id "characters" to be in the document
-    const characterList = screen.getByRole('list', { id: 'characters' });
-    expect(characterList).toBeInTheDocument();
+    it('renders a list of characters', () => {
+        // when
+        const characters = [
+            { id: 1, name: 'Iron Man' },
+            { id: 2, name: 'Captain America' },
+            { id: 3, name: 'Thor' },
+        ];
 
-    // expect a listitem for each character
-    const characterItems = screen.getAllByRole('listitem');
-    expect(characterItems).toHaveLength(characters.length);
+        // then
+        render(<CharactersList characters={characters} />, { wrapper: BrowserRouter });
 
-    // expect each listitem to have the character name and a link to the character detail page
-    characterItems.forEach((item, index) => {
-      // expect each listitem to have the character name
-      expect(item).toHaveTextContent(characters[index].name);
+        // expect a list with the id "characters" to be in the document
+        const characterList = screen.getByRole('list', { id: 'characters' });
+        expect(characterList).toBeInTheDocument();
 
-      // expect each listitem to have a link to the character detail page
-      const link = screen.getByRole('link', { name: characters[index].name });
-      expect(link).toBeInTheDocument();
-      expect(link).toHaveAttribute('href', `/characters/${characters[index].id}`);
+        // expect a listitem for each character
+        const characterItems = screen.getAllByRole('listitem');
+        expect(characterItems).toHaveLength(characters.length);
+
+        // expect each listitem to have the character name and a link to the character detail page
+        characterItems.forEach((item, index) => {
+            // expect each listitem to have the character name
+            expect(item).toHaveTextContent(characters[index].name);
+
+            // expect each listitem to have a link to the character detail page
+            const link = screen.getByRole('link', { name: characters[index].name });
+            expect(link).toBeInTheDocument();
+            expect(link).toHaveAttribute('href', `/characters/${characters[index].id}`);
+        });
+
     });
 
-  });
+    it('renders an empty list when no characters are provided', () => {
+        // when
 
-  it('renders an empty list when no characters are provided', () => {
-    // when
+        // then
+        render(<CharactersList />, { wrapper: BrowserRouter });
 
-    // then
-    render(<CharactersList />);
+        // expect a list with the id "characters" to be in the document
+        const characterList = screen.getByRole('list', { id: 'characters' });
+        expect(characterList).toBeInTheDocument();
 
-    // expect a list with the id "characters" to be in the document
-    const characterList = screen.getByRole('list', { id: 'characters' });
-    expect(characterList).toBeInTheDocument();
+        // expect no listitems
+        const characterItems = screen.queryAllByRole('listitem');
+        expect(characterItems).toHaveLength(0);
+    });
 
-    // expect no listitems
-    const characterItems = screen.queryAllByRole('listitem');
-    expect(characterItems).toHaveLength(0);
-  });
-  
 });
+
 ```
 
 Une bonne pratique de rédaction des tests unitaires est de découper le test en 3 parties :
@@ -419,6 +422,8 @@ Une bonne pratique de rédaction des tests unitaires est de découper le test en
 - `expect` : on vérifie le résultat
 
 Cela permet de rendre le test unitaire plus lisible et de mieux comprendre ce que l'on teste.
+
+Le composant `CharactersList` utilise le composant `Link` de `react-router-dom`. Ce composant `Link` a besoin d'un `router` pour fonctionner. Nous utilisons donc le composant `BrowserRouter` pour fournir un `router` au composant `CharactersList`.
 
 Commiter et pusher les modifications :
 
@@ -709,6 +714,7 @@ Créer un fichier `src/pages/CharactersPage.test.js` avec le contenu suivant :
 ```javascript
 import { render, screen } from '@testing-library/react';
 import CharactersPage from './CharactersPage';
+import { BrowserRouter } from 'react-router-dom';
 
 const characters = [
     {
@@ -731,7 +737,7 @@ describe('CharactersPage', () => {
         // when
 
         // then
-        render(<CharactersPage />);
+        render(<CharactersPage />, { wrapper: BrowserRouter });
 
         // expect the document title to be "Marvel App"
         expect(document.title).toBe('Marvel App');
@@ -751,6 +757,7 @@ describe('CharactersPage', () => {
     });
 
 });
+
 ```
 
 Ce test unitaire est un peu plus complexe que les précédents. En effet, nous avons besoin de mocker le hook `useLoaderData` pour pouvoir tester le composant `CharactersPage`. 
@@ -831,7 +838,7 @@ Faire le nécessaire pour créer une version 1.1.0 de l'application :
 
 ## Conclusion
 
-La mise en oeuvre des tests unitaires permet de fiabiliser l'application. Cela permet de vérifier que le code source est valide et que les fonctionnalités de l'application fonctionnent correctement. Cela permet aussi de détecter les régressions, c'est à dire les bugs qui apparaissent suite à une modification du code source.
+La mise en oeuvre des tests unitaires permet de fiabiliser l'application, de vérifier que le code source est valide et que les fonctionnalités de l'application fonctionnent correctement. Cela permet aussi de détecter les régressions, c'est à dire les bugs qui apparaissent suite à une modification du code source.
 
 Selon les applications, le langage utilisé, la complexité... il n'est pas toujours possible d'atteindre une couverture de code de 100%. Cependant, il est important d'atteindre une couverture de code la plus élevée possible. Cela permet de fiabiliser l'application et de détecter les bugs le plus tôt possible. 
 
@@ -848,6 +855,7 @@ Le mutation testing consiste à modifier le code source pour introduire des bugs
 ## Aller plus loin
 
 - [Jest](https://jestjs.io/)
+- Test Driven Development (TDD) : [Wikipedia](https://fr.wikipedia.org/wiki/Test_driven_development){:target="_blank"}
 
 ## Exercices
 
