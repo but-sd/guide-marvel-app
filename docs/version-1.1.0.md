@@ -812,9 +812,31 @@ Le rapport de couverture de code nous indique que le fichier `src/script.js` n'e
 
 Ce script javascript est appelé dans le fichier `src/index.html`. On constate que le fichier `src/index.html` n'est plus utilisé, il s'agissait du fichier html de la première version de l'application. Nous pouvons donc le supprimer. Après analyse, nous pouvons aussi supprimer les fichiers `src/index.css` et `src/App.css` qui ne sont plus utilisé.
 
+Modifier le fichier `index.js` pour supprimer l'import de fichier `index.css`:
+
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+```
+
 Commiter et pusher les modifications :
 
 ```bash
+git add src/index.js
 git rm src/index.html
 git rm src/index.css
 git rm src/App.css
