@@ -6,6 +6,7 @@ La version 1.2.0 va apporter les modifications suivantes :
 
 - Qualimétrie du code
 - Tri des personnages par nom ou date de modification
+- Augmentation de la couverture de code
 
 ```mermaid
 gitGraph
@@ -24,6 +25,11 @@ gitGraph
     commit id: "sort-ui"
     checkout develop
     merge feature-sort
+    branch feature-coverage
+    checkout feature-coverage
+    commit id: "coverage"
+    checkout develop
+    merge feature-coverage
     branch release-1.2.0
     checkout release-1.2.0
     commit id: "1.2.0.rc1"
@@ -105,7 +111,7 @@ Cette action utilise 2 secrets :
 - `GITHUB_TOKEN` : ce token est automatiquement créé par GitHub et permet d'accéder aux informations du repository
 - `SONAR_TOKEN` : ce token est créé sur SonarCloud et permet d'accéder aux informations du projet
 
-Afin de générer le token SonarCloud, il faut se rendre sur [SonarCloud](https://sonarcloud.io/) et aller dans `My Account` > `Security` > `Generate Tokens`. Il faut ensuite ajouter le token dans les secrets du repository GitHub.
+Afin de générer le token SonarCloud, il faut se rendre sur [SonarCloud](https://sonarcloud.io/) et aller dans `My Account` > `Security` > `Generate Tokens`. Il faut ensuite ajouter le token dans les secrets du repository GitHub (Settings > Secrets and variables > New repository secret).
 
 Il faut aussi décocher la case `Automatic Analysis` dans `Administration` > `Analysis Method` sur SonarCloud.
 
@@ -240,6 +246,23 @@ Ensuite le hook `useState` permet de gérer les paramètres `orderBy` et `order`
 
 On utilise le hook `useEffect` pour mettre à jour les paramètres de l'URL lorsque les paramètres `orderBy` et `order` changent.
 
+Modifier le fichier de test `src/App.test.js` :
+
+```javascript
+import { render, screen } from '@testing-library/react';
+import App from './App';
+import { act } from 'react-dom/test-utils';
+
+test('render Marvel App', async () => {
+  await act(() => {
+    render(<App />);
+  });
+
+
+  const h1Element = screen.getByRole('heading', { level: 1, name: "Marvel App" });
+  expect(h1Element).toBeInTheDocument();
+});
+```
 
 Modifier le fichier de test `src/pages/CharactersPage.test.js` :
 
@@ -420,22 +443,338 @@ const routes = [
 export default routes;
 ```
 
-On utilise le composant `URL` pour récupérer les paramètres `orderBy` et `order` de l'URL. On les passe ensuite à la fonction `getCharacters`.
+On utilise le composant `URL` pour récupérer les paramètres `orderBy` et `order` de l'URL. On les passe ensuite à la fonction `getCharacters` de l'API.
+
+Vérifier que les tests passent et que l'application fonctionne correctement, si ce n'est pas le cas, corriger les problèmes. 
+
+Remarque: La fonction `getCharacters` de l'API ne gère pas encore les paramètres `orderBy` et `order`, nous allons les ajouter dans la prochaine partie, il est donc normal que le tri ne fonctionne pas encore.
+
+Une fois que tout est ok, commiter et pusher les modifications :
+
+```bash
+git add src/pages/CharactersPage.js
+git add src/App.test.js
+git add src/pages/CharactersPage.test.js
+git add src/routes.js
+git commit -m "Add sort by and order in CharactersPage"
+git push --set-upstream origin feature/sort
+```
 
 ### Modification de l'API
 
-Modifier la fonction `getCharacters` du fichier `src/api.js` pour ajouter les paramètres `orderBy` et `order` :
+Modifier le fichier `src/api/character-api.js` pour ajouter les paramètres `orderBy` et `order` à la fonction `getCharacters` :
 
 ```javascript
+const characters = require('../data/characters.json');
+
+/**
+ * Get all characters from json file
+ * @returns 
+ */
 function getCharacters(orderBy = 'name', order = 'asc') {
-  ...
+    // Sort characters by name
+    let sortedCharacters = characters.sort((a, b) => {
+        if (orderBy === 'name') {
+            return a.name.localeCompare(b.name)
+        } else if (orderBy === 'modified') {
+            return new Date(b.modified) - new Date(a.modified)
+        } else {
+            throw new Error(`Invalid orderBy parameter: ${orderBy}`)
+        }
+    })
+
+    // Reverse the order if it is descending
+    if (order === 'desc') {
+        sortedCharacters.reverse()
+    }
+
+    return sortedCharacters
+}
+
+/**
+ * Get character by id
+ * @param {number} id 
+ * @returns 
+ */
+function getCharacterById(id) {
+    // If id is a number, convert it to string
+    if (typeof id === 'number') {
+        id = id.toString()
+    }
+
+    if (typeof id !== 'string') {
+        throw new Error(`Parameter id must be a number or a string, but it was ${typeof id}`)
+    }
+
+    // Find character by id
+    const character = characters.find((character) => character.id === id)
+
+    // Throw error if character is not found
+    if (!character) {
+        throw new Error(`Character with id ${id} not found`)
+    }
+    return character
+}
+
+module.exports = {
+    getCharacters,
+    getCharacterById
 }
 ```
 
-Implémenter le tri, en fonction des paramètres `orderBy` et `order`, la méthode `sort` permet de trier un tableau grâce à une fonction de comparaison. La fonction de comparaison prend 2 paramètres et retourne un nombre négatif si le premier paramètre est inférieur au second, 0 si les 2 paramètres sont égaux et un nombre positif si le premier paramètre est supérieur au second.
+On utilise les paramètres `orderBy` et `order` pour trier les personnages. La fonction `sort` permet de trier un tableau. On utilise la fonction `localeCompare` pour trier les personnages par nom, la fonction `Date` pour trier les personnages par date de modification. La fonction `sort` trie les éléments en fonction du résultat de la fonction de comparaison.
 
-Créer la pull request `feature/sort` afin de voir si le nouveau code passe bien les différents contrôles (tests unitaires, qualité du code)
+On utilise la fonction `reverse` pour inverser l'ordre des personnages si l'ordre est `desc`.
 
-Une fois la pull request validée, merger la branche `feature/sort` dans `develop`.
+Voir la documentation de la fonction `sort` [ici](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/sort).
 
-Puis faire le nécessaire pour créer la release `1.2.0` et valider la release.
+Modifier le fichier de `src/api/character-api.test.js` pour prendre en compte les paramètres `orderBy` et `order` :
+
+```javascript
+const { getCharacters, getCharacterById } = require('./character-api');
+const fs = require('fs');
+
+describe('character-api', () => {
+  const expected = JSON.parse(fs.readFileSync('src/data/characters.json', 'utf8'));
+
+  describe('getCharacters', () => {
+    it('returns all characters sorted by name ascending by default', () => {
+      // when
+
+      // then
+      const characters = getCharacters();
+
+      // expect the first character to be Beast
+      expect(characters[0].name).toBe('Beast');
+
+      // expect the last character to be Wolverine
+      expect(characters[characters.length - 1].name).toBe('Wolverine');
+    });
+
+    it('returns all characters sorted by modified descending', () => {
+      // when
+
+      // then
+      const characters = getCharacters('modified', 'desc');
+
+      // expect the first character to be Wolverine
+      expect(characters[0].name).toBe('Groot');
+
+      // expect the last character to be Beast
+      expect(characters[characters.length - 1].name).toBe('Hulk');
+    });
+
+    it('throws an error if orderBy is invalid', () => {
+      // when
+      const orderBy = 'foo';
+
+      // then
+      expect(() => {
+        getCharacters(orderBy);
+      }).toThrow(`Invalid orderBy parameter: ${orderBy}`);
+    });
+
+  });
+
+  describe('getCharacterById', () => {
+    test('returns the character with the given id when id is a string', () => {
+      // when
+      const id = "1009663";
+      const name = "Thor";
+
+      // then
+      const character = getCharacterById(id);
+
+      // expect
+      expect(character.id).toBe(id);
+      expect(character.name).toBe(name);
+    });
+
+    test('returns the character with the given id when id is a number', () => {
+      // when
+      const id = 1009663;
+      const name = "Thor";
+
+      // then
+      const character = getCharacterById(id);
+
+      // expect
+      expect(character.id).toBe(id.toString());
+      expect(character.name).toBe(name);
+    });
+
+    test('throws an error if id is not provided', () => {
+      expect(() => {
+        getCharacterById();
+      }).toThrow(`Parameter id must be a number or a string, but it was undefined`);
+    });
+
+    test('throws an error if id is not a number or a string', () => {
+      expect(() => {
+        getCharacterById({});
+      }).toThrow(`Parameter id must be a number or a string, but it was object`);
+    });
+
+    test('throws an error if character with given id is not found', () => {
+      const id = 999;
+      expect(() => {
+        getCharacterById(id);
+      }).toThrow(`Character with id ${id} not found`);
+    });
+  });
+});
+```
+
+Vérifier que les tests passent et que l'application fonctionne correctement, si ce n'est pas le cas, corriger les problèmes. Maintenant le tri des personnages devrait fonctionner correctement.
+
+Commiter et pusher les modifications :
+
+```bash
+git add src/api/character-api.js
+git add src/api/character-api.test.js
+git commit -m "Add sort by and order in character-api"
+git push --set-upstream origin feature/sort
+```
+
+Créer la pull request `feature/sort` afin de voir si le nouveau code passe bien les différents contrôles (tests unitaires, qualité du code). Une fois la pull request validée, merger la branche `feature/sort` dans `develop`.
+
+## Augmentation de la couverture de code
+
+Il reste encore des parties du code qui ne sont pas couvertes par les tests unitaires. Nous allons augmenter la couverture de code afin d'avoir une couverture de code la plus haute possible.
+
+Créer la branche `feature/coverage` :
+
+```bash
+git switch develop
+git pull
+git switch -c feature/coverage
+```
+
+### src/components
+
+Modifier le fichier `src/components/CharacterDetail.test.js` pour ajouter les tests unitaires manquants :
+
+```javascript
+import { render, screen } from '@testing-library/react';
+import { CharactersList } from './CharactersList';
+import { BrowserRouter } from 'react-router-dom'
+import CharacterDetail from './CharacterDetail';
+
+describe('CharactersDetail', () => {
+    it('renders the character detail', () => {
+        // when 
+        const character = {
+            id: "1",
+            name: "Thor",
+            description: "Thor description",
+            thumbnail: {
+                path: "https://foo.bar",
+                extension: "jpg"
+            }
+        }
+
+        // then
+        render(<CharacterDetail character={character} />, { wrapper: BrowserRouter });  
+
+        // expect a heading with the character name
+        const h2Element = screen.getByRole('heading', { level: 2, name: character.name });
+        expect(h2Element).toBeInTheDocument();
+
+        // expect a paragraph with the character description
+        const pElement = screen.getByText(character.description);
+        expect(pElement).toBeInTheDocument();
+
+        // expect an image with the character thumbnail
+        const imgElement = screen.getByRole('img', { name: character.name });
+        expect(imgElement).toBeInTheDocument();
+        expect(imgElement).toHaveAttribute('src', `${character.thumbnail.path}/standard_large.${character.thumbnail.extension}`);
+    });
+
+    it('renders the character detail without a thumbnail', () => {
+        // when 
+        const character = {
+            id: "1",
+            name: "Thor",
+            description: "Thor description",
+        }
+
+        // then
+        render(<CharacterDetail character={character} />, { wrapper: BrowserRouter });  
+
+        // expect a heading with the character name
+        const h2Element = screen.getByRole('heading', { level: 2, name: character.name });
+        expect(h2Element).toBeInTheDocument();
+
+        // expect a paragraph with the character description
+        const pElement = screen.getByText(character.description);
+        expect(pElement).toBeInTheDocument();
+
+        // expect no image
+        const imgElement = screen.queryByRole('img', { name: character.name });
+        expect(imgElement).not.toBeInTheDocument();
+    });
+
+    it('renders nothing when no character is provided', () => {
+        // when
+
+        // then
+        render(<CharacterDetail />, { wrapper: BrowserRouter });  
+
+        // expect empty h2 element
+        const h2Element = screen.queryByRole('heading', { level: 2 });
+        expect(h2Element).toBeEmptyDOMElement();        
+    });
+});
+
+```
+
+### src/pages
+
+Modifier le fichier `src/pages/ContactPage.test.js` :
+
+```javascript
+import { render, screen } from '@testing-library/react';
+import ContactPage from './ContactPage';
+
+test('renders Contact us message', () => {
+    // when
+
+    // then
+    render(<ContactPage />);
+
+    // expect the document title to be "Contact | Marvel App"
+    expect(document.title).toEqual("Contact | Marvel App");
+
+    // expect the heading and the paragraph to be in the document
+    const h2Element = screen.getByRole('heading', { level: 2, name: "Contact Us" });
+    const pElement = screen.getByText('Feel free to contact us at');
+    
+    expect(h2Element).toBeInTheDocument();
+    expect(pElement).toBeInTheDocument();
+
+    // expect to have a mailto link
+    const mailAddress = "marvelApp@gmail.com";
+    const mailtoLink = screen.getByRole('link', { name: mailAddress });
+    expect(mailtoLink).toBeInTheDocument();
+    expect(mailtoLink).toHaveAttribute('href', `mailto:${mailAddress}`);
+    expect(mailtoLink).toHaveTextContent(mailAddress);
+});
+
+```
+
+La couverture de code est maintenant à 100% pour les fichiers `src/components` et `src/pages`.
+
+Commiter et pusher les modifications :
+
+```bash
+git add src/components/CharacterDetail.test.js
+git add src/pages/ContactPage.test.js
+git commit -m "Add missing unit tests"
+git push --set-upstream origin feature/coverage
+```
+
+## Release 1.2.0
+
+Faire le nécessaire pour créer la release `1.2.0` contenant l'ensemble des modifications de la version 1.2.0.
+
+Puis à mettre à jour les branches `main` et `develop`.

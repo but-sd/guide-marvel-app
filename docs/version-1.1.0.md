@@ -146,7 +146,7 @@ git switch develop
 git switch -c feature/add-unit-tests
 ```
 
-### Mise en oeuvre du workflow de test unitaire
+**Mise en oeuvre du workflow de test unitaire**
 
 Nous allons maintenant mettre en oeuvre un workflow de test unitaire. L'objectif est de lancer les tests unitaires à chaque push, ce qui permettra de vérifier que le code source est toujours valide. Et permettra de rajouter un `status check` sur github et donc de bloquer les pull requests si les tests unitaires ne sont pas valides.
 
@@ -200,7 +200,7 @@ La pull request `feature/add-unit-tests` est bloqué (en rouge), car le test uni
 
 Nous allons fixer le test unitaire de `App.js` pour que la pull request `feature/add-unit-tests` soit valide et que nous puissions la merger dans la branche `develop`.
 
-### Correction du test unitaire de `App.js`
+**Correction du test unitaire de `App.js`**
 
 Modifier le fichier `src/App.test.js` avec le contenu suivant :
 
@@ -228,7 +228,7 @@ git push --set-upstream origin feature/add-unit-tests
 
 La pull request `feature/add-unit-tests` est à nouveau valide, on peut donc merger la pull request. 
 
-### Mise à jour de la pull request `feature/add-version-number`
+**Mise à jour de la pull request `feature/add-version-number`**
 
 On constate que la pull request `feature/add-version-number` est toujours bloquée, car elle ne contient toujours pas le fichier `.github/workflows/unit-tests.yml`, mais nous avons aussi un nouveau message car la branche `feature/add-unit-tests` n'est pas à jour avec la branche `develop`. 
 
@@ -774,7 +774,9 @@ git commit -m "Add unit tests for CharactersPage"
 git push
 ```
 
-## Exclure du code du rapport de couverture de code
+## Nettoyage du code
+
+**Exclure du code du rapport de couverture de code**
 
 Certains fichiers ne sont pertinents à être testés. c'est le cas par exemple des fichiers générés par `create-react-app` que nous n'avons pas modifiés. Nous allons donc exclure ces fichiers du rapport de couverture de code.
 
@@ -802,7 +804,7 @@ git commit -m "Exclude files from coverage report"
 git push
 ```
 
-## Suppression du code mort lié à la première version de l'application
+**Suppression du code mort lié à la première version de l'application**
 
 Avec le rapport de couverture de code, nous pouvons identifier le code mort, c'est à dire le code qui n'est pas exécuté par les tests unitaires. Soit nous devons écrire des tests unitaires pour ce code (car ce n'est finalement par du code mort), soit nous devons supprimer ce code.
 
@@ -878,13 +880,3 @@ Le mutation testing consiste à modifier le code source pour introduire des bugs
 
 - [Jest](https://jestjs.io/)
 - Test Driven Development (TDD) : [Wikipedia](https://fr.wikipedia.org/wiki/Test_driven_development){:target="_blank"}
-
-## Exercices
-
-Mettre en oeuvre tout ce qui est nécessaire pour créer une version 1.1.1 de l'application permettant d'atteindre une couverture de code de 100% pour :
-
-- `src/components`
-- `src/api`
-- `src/pages`
-
-Faire une release de la version 1.1.1 de l'application un fois les tests unitaires écrits et validés.
