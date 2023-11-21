@@ -244,6 +244,8 @@ npm install d3
 
 S'inspirer de [https://d3-graph-gallery.com/graph/donut_label.html](https://d3-graph-gallery.com/graph/donut_label.html){target="_blank"} pour générer un pie chart avec les capacités des personnages.
 
+Le tutoriel [https://www.tutorialsteacher.com/d3js/create-pie-chart-using-d3js](https://www.tutorialsteacher.com/d3js/create-pie-chart-using-d3js){target="_blank"} explique comment créer un pie chart avec `d3.js`.
+
 Créer le composant `src/components/D3PieChart.js` et implémenter le graphique avec `d3.js`.
 
 ```javascript
