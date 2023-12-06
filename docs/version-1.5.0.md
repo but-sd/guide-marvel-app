@@ -32,7 +32,7 @@ Le visuel attendu pour la liste des personnages devrait ressembler à ceci :
 
 #### Questions
 
-Répondre aux questions suivantes dans un fichier `answers.md` à la racine du projet.
+Répondre aux questions suivantes dans un fichier `answers-session-1.md` à la racine du projet.
 
 *git*
 
@@ -62,7 +62,7 @@ Répondre aux questions suivantes dans un fichier `answers.md` à la racine du p
 - Proposer cette modification à l'équipe de développement (alex1dregirard) pour une éventuelle intégration au projet si elle est jugée pertinente, c'est cette modification qui sera évaluée, 
 - Les modifications doivent être validées en fin de session 1, aucune modification ne sera acceptée après la fin de la session.  
 
-<!-- 
+
 ## Session 2
 
 Session 2 - Mercredi 6 Décembre 2023
@@ -79,12 +79,87 @@ Le visuel attendu pour la page de comparaison devrait ressembler à ceci :
 ### Remarques
 
 - La libraire `recharts` et plus particulièrement le composant `RadarChart` permet de créer le graphique de comparaison. Voir la documentation de la librairie pour plus d'informations. [https://recharts.org/en-US/api/RadarChart](https://recharts.org/en-US/api/RadarChart)
+- Le code existant de l'application pourrait servir de base....
+- Il s'agit d'une nouvelle feature, la fonctionnalité de la session 1 n'a (en théorie) pas encore été intégrée au projet, elle est toujours en attente de validation par l'équipe de développement.
+
+<font size=10>😹</font>-GPT n'est pas toujours la meilleure solution... <font size=10>🪄 🧠</font>
+
+Ci-dessous un début de code pour la page de comparaison :
+
+```javascript
+import React from 'react';
+
+const CompareCharactersPage = () => {
+    // change the title of the page
+    document.title = "Compare | Marvel App";
+
+    // to be replaced with the real data
+    const characters = [
+        {
+            name: '...'
+        },{
+            name: '...'
+        }
+    ]
+
+    // transform the characters to array of label/value objects
+    const options = characters.map((character, index) => ({
+        value: index,
+        label: character.name,
+    }));
+
+    // set the default options to the first two characters
+    const [option1, setOption1] = React.useState(options[0]);
+    const [option2, setOption2] = React.useState(options[1]);
+
+    const centerStyle = {
+        textAlign: 'center',
+        width: 500,
+    };
+
+    return (
+        <>
+            <h2>Compare characters</h2>
+
+            <p style={centerStyle}>
+                <select
+                    value={option1.value}
+                    onChange={(event) => setOption1(options[event.target.value])}
+                >
+                    {options.map((option) => (
+                        <option key={option.value} value={option.value}>
+                            {option.label}
+                        </option>
+                    ))}
+                </select>&nbsp; {/* Fix the ambiguous spacing */}
+                with&nbsp;
+                <select
+                    value={option2.value}
+                    onChange={(event) => setOption2(options[event.target.value])}
+                >
+                    {options.map((option) => (
+                        <option key={option.value} value={option.value}>
+                            {option.label}
+                        </option>
+                    ))}
+                </select>
+            </p>
+
+            <p style={centerStyle}>
+                {characters[option1.value].name} vs {characters[option2.value].name}
+            </p>
+        </>
+    );
+};
+
+export default CompareCharactersPage;
+```
 
 ### Evaluation
 
 #### Questions
 
-Répondre aux questions suivantes dans un fichier `answers.md` à la racine du projet.
+Répondre aux questions suivantes dans un fichier `answers-session-2.md` à la racine du projet.
 
 *méthode agile*
 
@@ -112,9 +187,9 @@ Répondre aux questions suivantes dans un fichier `answers.md` à la racine du p
 
 *code*
 
-- Les principes de développement mis en oeuvre peuvent-ils être appliqués à d'autres projets, d'autres langages ?
+- Les principes de développement mis en oeuvre peuvent-ils être appliqués à d'autres projets, d'autres langages et pourquoi ?
 
 #### Code
 
 - Comme pour la session 1, proposer cette modification à l'équipe de développement (alex1dregirard) pour une éventuelle intégration au projet si elle est jugée pertinente, c'est cette modification qui sera évaluée,
-- Les modifications doivent être validées en fin de session 2, aucune modification ne sera acceptée après la fin de la session. -->
+- Les modifications doivent être validées en fin de session 2, aucune modification ne sera acceptée après la fin de la session.
